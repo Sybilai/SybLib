@@ -44,7 +44,20 @@ namespace syb
 				else if
 					(msgType == "game_state")
 				{
-					//m_pWorld
+					BombWorld::FlattenMap();
+					int x = 0, y = 0;
+
+					for (Value::ConstValueIterator it = d["data"].Begin(); it != d["data"].End(); ++it, ++x)
+					{
+						// Lines(left to right)
+						y = 0;
+						for (Value::ConstValueIterator it2 = it->Begin(); it2 != it->End(); ++it2, ++y)
+						{
+							for (Value::ConstMemberIterator it3 = it2->MemberBegin(); it3 != it2->MemberEnd(); ++it3)
+								if (it3->value.Size())
+									m_pWorld->m_FlatMap[x][y] = 1;
+						}
+					}
 				}
 				else if
 					(msgType == "game_rules")
@@ -54,9 +67,11 @@ namespace syb
 						std::string mem = it->name.GetString();
 						if (mem == "sizeN")
 						{
+							m_pWorld->m_Width = it->value.GetInt();
 						}
 						else if (mem == "sizeM")
 						{
+							m_pWorld->m_Height = it->value.GetInt();
 						}
 						else if (mem == "bombs")
 						{

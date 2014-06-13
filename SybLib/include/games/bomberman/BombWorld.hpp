@@ -105,11 +105,36 @@ namespace syb
 		static BombMap m_Bombs;
 		static BombermanMap m_Bombermen;
 		static FlameMap m_Flames;
+
+		enum Blocks
+		{
+			BL_OPEN, // 0
+			BL_FIXBLOCK,
+			BL_BOT,
+			BL_FLAME,
+			BL_BOMB
+		};
+		static int m_FlatMap[21][16];
+
+		static void FlattenMap()
+		{
+			for (int i = 0; i < 22; ++i)
+				for (int j = 0; j < 17; ++j)
+					m_FlatMap[i][j] = 0;
+		}
+
+		static int m_Width;
+		static int m_Height;
 	};
 
 	BombWorld::BombMap BombWorld::m_Bombs;
 	BombWorld::BombermanMap BombWorld::m_Bombermen;
 	BombWorld::FlameMap BombWorld::m_Flames;
+
+	int BombWorld::m_Width;
+	int BombWorld::m_Height;
+
+	int BombWorld::m_FlatMap[21][16];
 } // namespace syb
 
 #endif // BOMB_WORLD_HPP

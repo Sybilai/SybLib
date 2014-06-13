@@ -67,6 +67,18 @@ const char* const SOCK_DEF_PORT = "8124";
 const char* const SOCK_DEF_CONNFLAG = "terminator";
 const int SOCK_BUF_LEN = 16384;
 
+// ----------------------------------------------------------------------------
+// NAVIGATION DIRECTIONS
+// ----------------------------------------------------------------------------
+enum Direction
+{
+	NONE,
+	UP,
+	RIGHT,
+	DOWN,
+	LEFT
+};
+
 } // namespace syb
 
 #endif // SYB_DEF_HPP

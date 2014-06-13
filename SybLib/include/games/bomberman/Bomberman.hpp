@@ -2,6 +2,7 @@
 #define BOMB_ERMAN_HPP
 
 #include "core/IEntity.hpp"
+#include "core/SybDef.hpp"
 
 
 namespace syb
@@ -10,15 +11,6 @@ namespace syb
 	{
 	public:
 		static unsigned int SPEED;
-
-		enum Direction
-		{
-			NONE,
-			UP,
-			RIGHT,
-			DOWN,
-			LEFT
-		};
 
 		Bomberman(Vec2 pos, int id, std::string direction) :
 			IEntity(pos, id)

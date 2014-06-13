@@ -93,9 +93,6 @@
     <ClInclude Include="include\utils\Vec2.hpp">
       <Filter>utils\public</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\IndexedPriorityQueue.hpp">
-      <Filter>utils\public</Filter>
-    </ClInclude>
     <ClInclude Include="include\utils\Utils.hpp">
       <Filter>utils\public</Filter>
     </ClInclude>
@@ -103,15 +100,6 @@
       <Filter>networking\public</Filter>
     </ClInclude>
     <ClInclude Include="include\ai\AStarSearch.hpp">
-      <Filter>ai\public</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ai\Graph.hpp">
-      <Filter>ai\public</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ai\GraphEdge.hpp">
-      <Filter>ai\public</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ai\GraphNode.hpp">
       <Filter>ai\public</Filter>
     </ClInclude>
   </ItemGroup>
