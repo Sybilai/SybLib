@@ -102,6 +102,18 @@
     <ClInclude Include="include\networking\WinTcpSocket.hpp">
       <Filter>networking\public</Filter>
     </ClInclude>
+    <ClInclude Include="include\ai\AStarSearch.hpp">
+      <Filter>ai\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ai\Graph.hpp">
+      <Filter>ai\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ai\GraphEdge.hpp">
+      <Filter>ai\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ai\GraphNode.hpp">
+      <Filter>ai\public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\networking\WebSocket.cpp">

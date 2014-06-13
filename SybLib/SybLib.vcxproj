@@ -11,6 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\ai\AStarSearch.hpp" />
+    <ClInclude Include="include\ai\Graph.hpp" />
+    <ClInclude Include="include\ai\GraphEdge.hpp" />
+    <ClInclude Include="include\ai\GraphNode.hpp" />
     <ClInclude Include="include\ai\IBot.hpp" />
     <ClInclude Include="include\core\Game.hpp" />
     <ClInclude Include="include\core\IEntity.hpp" />
