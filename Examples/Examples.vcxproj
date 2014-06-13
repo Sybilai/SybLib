@@ -10,51 +10,20 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\ai\IBot.hpp" />
-    <ClInclude Include="include\core\Game.hpp" />
-    <ClInclude Include="include\core\IEntity.hpp" />
-    <ClInclude Include="include\core\SybDebug.hpp" />
-    <ClInclude Include="include\core\SybDef.hpp" />
-    <ClInclude Include="include\games\bomberman\Bomb.hpp" />
-    <ClInclude Include="include\games\bomberman\Bomberman.hpp" />
-    <ClInclude Include="include\games\bomberman\BombGame.hpp" />
-    <ClInclude Include="include\games\bomberman\BombWorld.hpp" />
-    <ClInclude Include="include\games\bomberman\Flame.hpp" />
-    <ClInclude Include="include\networking\easywsclient\easywsclient.hpp" />
-    <ClInclude Include="include\networking\IOChannel.hpp" />
-    <ClInclude Include="include\networking\ITcpSocket.hpp" />
-    <ClInclude Include="include\networking\WebSocket.hpp" />
-    <ClInclude Include="include\networking\WinTcpSocket.hpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="include\utils\IndexedPriorityQueue.hpp" />
-    <ClInclude Include="include\utils\Utils.hpp" />
-    <ClInclude Include="include\utils\Vec2.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="include\networking\easywsclient\easywsclient.cpp" />
-    <ClCompile Include="src\networking\IOChannel.cpp" />
-    <ClCompile Include="src\networking\WebSocket.cpp" />
-    <ClCompile Include="src\networking\WinTcpSocket.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="src\utils\Vec2.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{F4BCB227-2D40-4F5E-B42A-C2AFA5F3323C}</ProjectGuid>
+    <ProjectGuid>{740D21DA-C004-4A6C-B3AC-0E3EE20018FE}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>SybLib</RootNamespace>
+    <RootNamespace>Examples</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -71,7 +40,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(IncludePath)</IncludePath>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -79,12 +51,14 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>C:\Users\cogloch\Source\Repos\SybLib\SybLib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\cogloch\Source\Repos\SybLib\SybLib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>syblib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -95,7 +69,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -104,6 +78,9 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

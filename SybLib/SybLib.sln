@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SybLib", "SybLib.vcxproj", "{F4BCB227-2D40-4F5E-B42A-C2AFA5F3323C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Examples", "..\Examples\Examples.vcxproj", "{740D21DA-C004-4A6C-B3AC-0E3EE20018FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -15,6 +17,10 @@ Global
 		{F4BCB227-2D40-4F5E-B42A-C2AFA5F3323C}.Debug|Win32.Build.0 = Debug|Win32
 		{F4BCB227-2D40-4F5E-B42A-C2AFA5F3323C}.Release|Win32.ActiveCfg = Release|Win32
 		{F4BCB227-2D40-4F5E-B42A-C2AFA5F3323C}.Release|Win32.Build.0 = Release|Win32
+		{740D21DA-C004-4A6C-B3AC-0E3EE20018FE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{740D21DA-C004-4A6C-B3AC-0E3EE20018FE}.Debug|Win32.Build.0 = Debug|Win32
+		{740D21DA-C004-4A6C-B3AC-0E3EE20018FE}.Release|Win32.ActiveCfg = Release|Win32
+		{740D21DA-C004-4A6C-B3AC-0E3EE20018FE}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
