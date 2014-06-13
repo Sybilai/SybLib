@@ -119,6 +119,7 @@ namespace syb
 						std::string eventType = "none";
 						Vec2 pos;
 						int id;
+						int aiId = -1;
 						std::string direction;
 						std::string type;
 						bool mortal;
@@ -169,6 +170,8 @@ namespace syb
 										direction = it3->value.GetString();
 									else if (mem2 == "object_id")
 										id = it3->value.GetInt();
+									else if (mem2 == "id")
+										aiId = it3->value.GetInt();
 								}
 							}
 						}
@@ -184,24 +187,25 @@ namespace syb
 						else if (eventType == "new_entity")
 						{
 							m_pWorld->CreateEntity(isBlocking, mortal, type, pos, direction, id);
+							if (!m_pBot->m_pMe)
+							{
+								if (aiId == m_pBot->GetId())
+								{
+									m_pBot->m_pPos = &m_pWorld->m_vBombermen[m_pWorld->m_vBombermen.size() - 1].m_Pos;
+									m_pBot->m_pMe = &m_pWorld->m_vBombermen[m_pWorld->m_vBombermen.size() - 1];
+									//m_pBot->m_pPos = &m_pWorld->m_vBombermen[m_pWorld->m_vBombermen.size() - 1].m_Pos;
+								}
+							}
 						}
 					}
 
-					m_pBot->AttachWorld(m_pWorld);
+					if (!m_pBot)
+						m_pBot->AttachWorld(m_pWorld);
 					m_State = G_STATE_RUNNING;
 				}
 
 				msgs.pop();
 			}
-		}
-
-		void CheckTriggers()
-		{
-			// This shit is useless
-			// Event[frame] handles this shit
-			// Why did I even consider placing this shit
-			// Anywhere
-			// Like fuck this
 		}
 	};
 } // namespace syb

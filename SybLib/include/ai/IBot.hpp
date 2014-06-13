@@ -13,16 +13,23 @@ namespace syb
 	{
 	public:
 		IBot(std::string name) :
-			m_Name(name)
+			m_Name(name),
+			m_pPos(nullptr),
+			m_pMe(nullptr),
+			m_pWorld(nullptr)
 		{
 		}
 
 		const std::string &GetName() const { return m_Name; }
 		void SetId(const int &id) { m_MyId = id; }
+		const int &GetId() { return m_MyId; }
 		void AttachIOChannel(IOChannel *pIo) { m_pIO = pIo; }
 		void AttachWorld(BombWorld *pWorld) { m_pWorld = pWorld; }
 
 		virtual void Update() = 0;
+
+		Bomberman *m_pMe;
+		Vec2 *m_pPos;
 
 	protected:
 		void Send(std::string event_type, std::string *data = nullptr)

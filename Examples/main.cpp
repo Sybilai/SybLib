@@ -2,6 +2,7 @@
 
 #include "games/bomberman/BombGame.hpp"
 #include "ai/IBot.hpp"
+#include "ai/AStarSearch.hpp"
 
 using namespace syb;
 
@@ -15,10 +16,17 @@ public:
 		static int a = 1;
 		if (a)
 		{
-		//std::string path = "\"up\", \"up\", \"left\", \"left\", \"right\", \"down\", \"up\"";
-			std::string path = "\"up\", \"up\"";
-			Send("move", &path);
-			a = 0;
+			//std::string path = "\"up\", \"up\", \"left\", \"left\", \"right\", \"down\", \"up\"";
+			if (m_pPos)
+			{
+				std::string myPath;
+				Vec2 myPos = *m_pPos;
+				Vec2 target(2.0, 2.0);
+				Search(myPos, target, myPath);
+				std::string path = "\"up\", \"up\"";
+				Send("move", &path);
+				a = 0;
+			}
 		}
 	}
 };

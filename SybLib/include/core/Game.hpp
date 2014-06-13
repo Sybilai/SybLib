@@ -123,7 +123,7 @@ namespace syb
 		//virtual void Update(double dt);
 
 		virtual void HandleEvents() = 0;
-		virtual void CheckTriggers() = 0;
+		//virtual void CheckTriggers() = 0;
 
 		TimestepMode m_TimestepMode;
 		unsigned int m_FixedFPS;

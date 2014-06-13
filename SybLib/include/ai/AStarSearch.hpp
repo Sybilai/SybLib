@@ -54,16 +54,16 @@ namespace syb
 			return cost;
 		}
 
-		static bool operator<(const GraphNode &lhs, const GraphNode &rhs)
-		{
-			return lhs.GetAdjCost() > rhs.GetAdjCost();
-		}
-
 	private:
 		Vec2 m_Pos;
 		int m_AdjCost;
 		int m_CumCost;
 	};
+
+	static bool operator<(const GraphNode &lhs, const GraphNode &rhs)
+	{
+		return lhs.GetAdjCost() > rhs.GetAdjCost();
+	}
 
 	// --------------------------------------------------------------------
 	// Will provide the shortest distance on accessible terrain, without taking into account some gameplay elements: flames, bombs, bots

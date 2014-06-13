@@ -38,6 +38,10 @@ namespace syb
 		/*static BombMap m_Bombs;
 		static BombermanMap m_Bombermen;
 		static FlameMap m_Flames;*/
+		/*std::vector<IEntity*> m_vEntities;
+		std::vector<Bomb> m_vBombs;
+		std::vector<Bomberman> m_vBombermen;
+		std::vector<Flame> m_vFlames;*/
 		static std::vector<IEntity*> m_vEntities;
 		static std::vector<Bomb> m_vBombs;
 		static std::vector<Bomberman> m_vBombermen;
