@@ -31,7 +31,7 @@ namespace syb
 				(type == "player")
 			{
 				Bomberman bomberman(pos, id, direction);
-				m_Bombermen.insert(std::make_pair(id, bomberman));
+				m_Bombermen.insert(std::pair<int, Bomberman>(id, bomberman));
 				//m_Bombermen[id] = bomberman;
 			}
 			else if 
@@ -102,10 +102,14 @@ namespace syb
 		}
 
 		// no da-i 4 juma noaptea
-		BombMap m_Bombs;
-		BombermanMap m_Bombermen;
-		FlameMap m_Flames;
+		static BombMap m_Bombs;
+		static BombermanMap m_Bombermen;
+		static FlameMap m_Flames;
 	};
+
+	BombWorld::BombMap BombWorld::m_Bombs;
+	BombWorld::BombermanMap BombWorld::m_Bombermen;
+	BombWorld::FlameMap BombWorld::m_Flames;
 } // namespace syb
 
 #endif // BOMB_WORLD_HPP
