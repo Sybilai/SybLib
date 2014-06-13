@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClInclude Include="include\ai\AStarSearch.hpp" />
     <ClInclude Include="include\ai\IBot.hpp" />
+    <ClInclude Include="include\ai\SearchTemp.hpp" />
     <ClInclude Include="include\core\Game.hpp" />
     <ClInclude Include="include\core\IEntity.hpp" />
     <ClInclude Include="include\core\SybDebug.hpp" />

@@ -102,6 +102,9 @@
     <ClInclude Include="include\games\bomberman\BombWorld.hpp">
       <Filter>games\bomberman\public</Filter>
     </ClInclude>
+    <ClInclude Include="include\ai\SearchTemp.hpp">
+      <Filter>ai\public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\networking\WebSocket.cpp">

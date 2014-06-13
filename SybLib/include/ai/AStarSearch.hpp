@@ -8,6 +8,8 @@
 #include <string>
 #include <cmath>
 #include <queue>
+#include <vector>
+#include <cstdlib>
 
 namespace syb
 {
@@ -35,23 +37,23 @@ namespace syb
 
 		void Advance(const int &dir)
 		{
-			m_CumCost += 10;
+			m_CumCost += (dir == 8 ? (dir % 2 == 0 ? 10 : 14) : 10);;
 		}
 
 		int HeuristicCost(const Vec2 &target)
 		{
-			int dispX = target.x - m_Pos.x;
-			int dispY = target.y - m_Pos.y;
-			int cost;
+			static int dispX = target.x - m_Pos.x;
+			static int dispY = target.y - m_Pos.y;
+			static int cost;
 
 			// Available heuristics for calculating the estimate cost:
 			// Manhattan: sum of the displacement in tiles vertically and horizontally
 			//cost = abs(dispX) + abs(dispY);
 			// Euclidian: straight line distance between two points
-			cost = (int)(sqrt(dispX*dispX + dispY * dispY));
+			cost = static_cast<int>(sqrt(dispX*dispX + dispY * dispY));
 			// Euclidian Squared: avoids the sqrt in the euclidian distance for performance improvements
 			//cost = dispX*dispX + dispY * dispY;
-			return cost;
+			return (cost);
 		}
 
 	private:
@@ -69,22 +71,26 @@ namespace syb
 	// Will provide the shortest distance on accessible terrain, without taking into account some gameplay elements: flames, bombs, bots
 	// Returns false if no such path exists given the situation
 	// --------------------------------------------------------------------
-	bool Search(const Vec2 &start, const Vec2 &target, std::string &path)
+	std::string Search(const Vec2 &start, const Vec2 &target)
 	{
-		std::priority_queue<GraphNode> pq[2];
-		int pqi = 0; 
-		GraphNode *n0, *m0;
+		const int dir = 4;
+		static int dx[dir] = { 1, 0, -1, 0 };
+		static int dy[dir] = { 0, 1, 0, -1 };
+
+		static std::priority_queue<GraphNode> pq[2];
+		static int pqi = 0; 
+		static GraphNode *n0, *m0;
+		static int i, j, x, y, xdx, ydy;
+		static char c;
 
 		//int visitedNodes[BombWorld::m_Width][BombWorld::m_Height];
 		//int openNodes[BombWorld::m_Width][BombWorld::m_Height];
-		int visitedNodes[21][16];
-		int openNodes[21][16];
+		static int visitedNodes[21][16];
+		static int openNodes[21][16];
 
-		int x, y;
-
-		for (y = 0; y < BombWorld::m_Height; ++y)
+		for (y = 0; y < 15; ++y)
 		{
-			for (x = 0; x < BombWorld::m_Width; ++x)
+			for (x = 0; x < 20; ++x)
 			{
 				visitedNodes[x][y] = 0;
 				openNodes[x][y] = 0;
@@ -97,8 +103,6 @@ namespace syb
 		openNodes[x][y] = n0->GetAdjCost();
 
 		int dirMap[21][16];
-		int dx[4] = { 1, 0, -1, 0 };
-		int dy[4] = { 0, 1, 0, -1 };
 
 		while (!pq[pqi].empty())
 		{
@@ -113,10 +117,11 @@ namespace syb
 
 			if (x == target.x && y == target.y)
 			{
+				std::string path = "";
 				while (!(x == start.x && y == start.y))
 				{
-					int j = dirMap[x][y];
-					char c = '0' + (j + 2) % 4;
+					j = dirMap[x][y];
+					c = '0' + (j + dir / 2) % dir;
 					path = c + path;
 					x += dx[j];
 					y += dy[j];
@@ -124,17 +129,14 @@ namespace syb
 
 				delete n0;
 				while (!pq[pqi].empty()) pq[pqi].pop();
-				return true;
+				return path;
 			}
 			
-			int xdx, ydy;
-
-			for (int i = 0; i< 4; i++)
+			for (i = 0; i < dir; i++)
 			{
 				xdx = x + dx[i]; ydy = y + dy[i];
 
-				if (!(xdx<0 || xdx>BombWorld::m_Width - 1 || ydy<0 || ydy>BombWorld::m_Height - 1 || BombWorld::m_FlatMap[xdx][ydy] == 1
-					|| visitedNodes[xdx][ydy] == 1))
+				if (!(xdx<0 || xdx > 20 - 1 || ydy<0 || ydy > 15 - 1 || BombWorld::m_FlatMap[xdx][ydy] == 1 || visitedNodes[xdx][ydy] == 1))
 				{
 					m0 = new GraphNode(Vec2(xdx, ydy), n0->GetCumCost(), n0->GetAdjCost());
 					m0->Advance(i);
@@ -144,12 +146,12 @@ namespace syb
 					{
 						openNodes[xdx][ydy] = m0->GetAdjCost();
 						pq[pqi].push(*m0);
-						dirMap[xdx][ydy] = (i + 4 / 2) % 4;
+						dirMap[xdx][ydy] = (i + dir / 2) % dir;
 					}
 					else if (openNodes[xdx][ydy]>m0->GetAdjCost())
 					{
 						openNodes[xdx][ydy] = m0->GetAdjCost();
-						dirMap[xdx][ydy] = (i + 4 / 2) % 4;
+						dirMap[xdx][ydy] = (i + dir / 2) % dir;
 
 						while (!(pq[pqi].top().GetPos().x == xdx &&
 							pq[pqi].top().GetPos().y == ydy))
@@ -173,7 +175,32 @@ namespace syb
 			}
 			delete n0;
 		}
-		return false;
+		return "";
+	}
+
+	std::string JsonPath(std::string dirPath)
+	{
+		std::vector<std::string> dirs(4);
+		dirs[0] = "\"right\"";
+		dirs[1] = "\"down\"";
+		dirs[2] = "\"left\"";
+		dirs[3] = "\"up\"";
+
+		std::string result;
+
+		for (int i = 0; i < dirPath.size() - 1; ++i)
+		{
+			std::string thisisridiculous;
+			thisisridiculous += dirPath[i];
+			int way = std::stoi(thisisridiculous);
+			result += dirs[way];
+			result += ",";
+		}
+		std::string thisisridiculous;
+		thisisridiculous += dirPath[dirPath.size() - 1];
+		result += dirs[std::stoi(thisisridiculous)];
+
+		return result;
 	}
 } // namespace syb
 
