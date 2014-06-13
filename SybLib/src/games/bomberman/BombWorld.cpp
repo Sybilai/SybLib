@@ -15,6 +15,7 @@ namespace syb
 	int BombWorld::m_Height;
 
 	int BombWorld::m_FlatMap[21][16];
+	BombWorld::Tile BombWorld::m_Map[21][16];
 
 	void BombWorld::CreateEntity(bool isBlocking,
 								 bool mortal,

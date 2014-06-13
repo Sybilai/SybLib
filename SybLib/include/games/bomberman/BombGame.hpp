@@ -52,8 +52,38 @@ namespace syb
 						for (Value::ConstValueIterator it2 = it->Begin(); it2 != it->End(); ++it2, ++y)
 						{
 							for (Value::ConstMemberIterator it3 = it2->MemberBegin(); it3 != it2->MemberEnd(); ++it3)
+							{
+								// it3->value is the "content" array
 								if (it3->value.Size())
 									m_pWorld->m_FlatMap[x][y] = 1;
+								for (Value::ConstValueIterator it4 = it3->value.Begin(); it4 != it3->value.End(); ++it4)
+								{
+									for (Value::ConstMemberIterator it5 = it4->MemberBegin(); it5 != it4->MemberEnd(); ++it5)
+									{
+										std::string member = it5->name.GetString();
+										if (member == "type")
+										{
+											std::string ty = it5->value.GetString();
+											if (ty == "fixblock")
+											{
+												m_pWorld->m_Map[x][y].m_Blocks.push_back(BombWorld::BL_FIXBLOCK);
+											}
+											else if (ty == "bot")
+											{
+												m_pWorld->m_Map[x][y].m_Blocks.push_back(BombWorld::BL_BOT);
+											}
+											else if (ty == "flame")
+											{
+												m_pWorld->m_Map[x][y].m_Blocks.push_back(BombWorld::BL_FLAME);
+											}
+											else if (ty == "bomb")
+											{
+												m_pWorld->m_Map[x][y].m_Blocks.push_back(BombWorld::BL_BOMB);
+											}
+										}
+									}
+								}
+							}
 						}
 					}
 				}

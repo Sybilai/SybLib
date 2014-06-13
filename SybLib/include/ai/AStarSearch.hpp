@@ -1,6 +1,10 @@
 #ifndef SYB_GRAPH_NODE_HPP
 #define SYB_GRAPH_NODE_HPP
 
+// --------------------------------------------
+// Creds: http://code.activestate.com/recipes/577457-a-star-shortest-path-algorithm/
+// --------------------------------------------
+
 #include "utils/Vec2.hpp"
 #include "core/SybDef.hpp"
 #include "games/bomberman/BombWorld.hpp"
@@ -188,7 +192,7 @@ namespace syb
 
 		std::string result;
 
-		for (int i = 0; i < dirPath.size() - 1; ++i)
+		for (unsigned int i = 0; i < dirPath.size() - 1; ++i)
 		{
 			std::string thisisridiculous;
 			thisisridiculous += dirPath[i];
@@ -196,9 +200,12 @@ namespace syb
 			result += dirs[way];
 			result += ",";
 		}
-		std::string thisisridiculous;
-		thisisridiculous += dirPath[dirPath.size() - 1];
-		result += dirs[std::stoi(thisisridiculous)];
+		if (dirPath.size() - 1 > 0)
+		{
+			std::string thisisridiculous;
+			thisisridiculous += dirPath[dirPath.size() - 1];
+			result += dirs[std::stoi(thisisridiculous)];
+		}
 
 		return result;
 	}

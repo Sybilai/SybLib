@@ -47,7 +47,7 @@ namespace syb
 		static std::vector<Bomberman> m_vBombermen;
 		static std::vector<Flame> m_vFlames;
 
-		enum Blocks
+		enum Block
 		{
 			BL_OPEN, // 0
 			BL_FIXBLOCK,
@@ -55,7 +55,14 @@ namespace syb
 			BL_FLAME,
 			BL_BOMB
 		};
+
+		struct Tile
+		{
+			std::vector<Block> m_Blocks;
+		};
+
 		static int m_FlatMap[21][16];
+		static Tile m_Map[21][16];
 
 		static int m_Width;
 		static int m_Height;
