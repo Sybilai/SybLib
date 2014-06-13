@@ -17,11 +17,9 @@
     <ClInclude Include="include\core\IEntity.hpp" />
     <ClInclude Include="include\core\SybDebug.hpp" />
     <ClInclude Include="include\core\SybDef.hpp" />
-    <ClInclude Include="include\games\bomberman\Bomb.hpp" />
-    <ClInclude Include="include\games\bomberman\Bomberman.hpp" />
+    <ClInclude Include="include\games\bomberman\BombEntities.hpp" />
     <ClInclude Include="include\games\bomberman\BombGame.hpp" />
     <ClInclude Include="include\games\bomberman\BombWorld.hpp" />
-    <ClInclude Include="include\games\bomberman\Flame.hpp" />
     <ClInclude Include="include\networking\easywsclient\easywsclient.hpp" />
     <ClInclude Include="include\networking\IOChannel.hpp" />
     <ClInclude Include="include\networking\ITcpSocket.hpp" />
@@ -34,6 +32,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\networking\easywsclient\easywsclient.cpp" />
+    <ClCompile Include="src\games\bomberman\BombEntities.cpp" />
+    <ClCompile Include="src\games\bomberman\BombWorld.cpp" />
     <ClCompile Include="src\networking\IOChannel.cpp" />
     <ClCompile Include="src\networking\WebSocket.cpp" />
     <ClCompile Include="src\networking\WinTcpSocket.cpp">

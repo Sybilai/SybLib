@@ -4,6 +4,8 @@
 #include "core/IEntity.hpp"
 #include "core/SybDef.hpp"
 
+#include <string>
+
 
 namespace syb
 {
@@ -30,7 +32,27 @@ namespace syb
 		Direction m_Direction;
 	};
 
-	unsigned int Bomberman::SPEED;
+	class Bomb : public IEntity
+	{
+	public:
+		static unsigned int LIFE;
+		static unsigned int RANGE;
+		static unsigned int SPEED;
+
+		Bomb(Vec2 pos, int id) :
+			IEntity(pos, id)
+		{ }
+	};
+
+	class Flame : public IEntity
+	{
+	public:
+		static unsigned int LIFE;
+
+		Flame(Vec2 pos, int id) :
+			IEntity(pos, id)
+		{ }
+	};
 } // namespace syb
 
 #endif // BOMB_ERMAN_HPP

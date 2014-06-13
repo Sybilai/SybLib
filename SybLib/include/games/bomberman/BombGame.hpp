@@ -4,9 +4,7 @@
 #include "ai/IBot.hpp"
 #include "core/Game.hpp"
 #include "rapidjson/document.h"
-#include "Bomb.hpp"
-#include "Flame.hpp"
-#include "Bomberman.hpp"
+#include "BombEntities.hpp"
 #include "utils/Vec2.hpp"
 
 using namespace rapidjson;
@@ -44,7 +42,7 @@ namespace syb
 				else if
 					(msgType == "game_state")
 				{
-					BombWorld::FlattenMap();
+					m_pWorld->FlattenMap();
 					int x = 0, y = 0;
 
 					for (Value::ConstValueIterator it = d["data"].Begin(); it != d["data"].End(); ++it, ++x)
