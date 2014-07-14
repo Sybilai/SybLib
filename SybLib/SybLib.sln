@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SybLib", "SybLib.vcxproj", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Examples", "..\Examples\Examples.vcxproj", "{740D21DA-C004-4A6C-B3AC-0E3EE20018FE}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bomberman", "..\Bomberman\Bomberman.vcxproj", "{1553F6E0-28A2-4ACF-9B5A-CE462378B30E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -21,6 +23,10 @@ Global
 		{740D21DA-C004-4A6C-B3AC-0E3EE20018FE}.Debug|Win32.Build.0 = Debug|Win32
 		{740D21DA-C004-4A6C-B3AC-0E3EE20018FE}.Release|Win32.ActiveCfg = Release|Win32
 		{740D21DA-C004-4A6C-B3AC-0E3EE20018FE}.Release|Win32.Build.0 = Release|Win32
+		{1553F6E0-28A2-4ACF-9B5A-CE462378B30E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1553F6E0-28A2-4ACF-9B5A-CE462378B30E}.Debug|Win32.Build.0 = Debug|Win32
+		{1553F6E0-28A2-4ACF-9B5A-CE462378B30E}.Release|Win32.ActiveCfg = Release|Win32
+		{1553F6E0-28A2-4ACF-9B5A-CE462378B30E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

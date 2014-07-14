@@ -10,40 +10,10 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\core\Game.hpp" />
-    <ClInclude Include="include\core\Time.hpp" />
-    <ClInclude Include="include\events\EventManager.hpp" />
-    <ClInclude Include="include\events\IEvent.hpp" />
-    <ClInclude Include="include\events\IEventFilter.hpp" />
-    <ClInclude Include="include\events\IEventListener.hpp" />
-    <ClInclude Include="include\networking\IODevice.hpp" />
-    <ClInclude Include="include\networking\IOManager.hpp" />
-    <ClInclude Include="include\networking\WinNamedPipe.hpp" />
-    <ClInclude Include="include\networking\WinTcpSocket.hpp" />
-    <ClInclude Include="include\world\IComponent.hpp" />
-    <ClInclude Include="include\world\Movement.hpp" />
-    <ClInclude Include="include\world\Transform.hpp" />
-    <ClInclude Include="include\world\Vec2.hpp" />
-    <ClInclude Include="include\world\WorldManager.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\core\Game.cpp" />
-    <ClCompile Include="src\core\Time.cpp" />
-    <ClCompile Include="src\events\EventManager.cpp" />
-    <ClCompile Include="src\events\IEvent.cpp" />
-    <ClCompile Include="src\events\IEventFilter.cpp" />
-    <ClCompile Include="src\events\IEventListener.cpp" />
-    <ClCompile Include="src\networking\IOManager.cpp" />
-    <ClCompile Include="src\networking\WinNamedPipe.cpp" />
-    <ClCompile Include="src\networking\WinTcpSocket.cpp" />
-    <ClCompile Include="src\world\Movement.cpp" />
-    <ClCompile Include="src\world\WorldManager.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{F4BCB227-2D40-4F5E-B42A-C2AFA5F3323C}</ProjectGuid>
+    <ProjectGuid>{1553F6E0-28A2-4ACF-9B5A-CE462378B30E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>SybLib</RootNamespace>
+    <RootNamespace>Bomberman</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -69,9 +39,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(IncludePath)</IncludePath>
-  </PropertyGroup>
+  <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>
@@ -79,7 +47,6 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

@@ -1,11 +1,6 @@
 #ifndef SYB_WIN_TCPSOCKET_HPP
 #define SYB_WIN_TCPSOCKET_HPP
 
-#ifndef SYB_DEF_HPP
-#include "core/SybDef.hpp"
-#endif
-#include "ITcpSocket.hpp"
-
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
@@ -13,22 +8,32 @@
 #include <winsock2.h>
 #include <ws2tcpip.h>
 
+#include "IODevice.hpp"
+
 
 namespace syb
 {
-	/// A Win32 WinSock wrapper class
-	class WinTcpSocket
+	class WinTcpSocket : public IODevice
 	{
 	public:
-		WinTcpSocket(const char *server_req, const char *address = SOCK_DEF_ADDRESS, const char *port = SOCK_DEF_PORT);
+		WinTcpSocket();
 		~WinTcpSocket();
-		void Connect();
-		void Kill();
+
+		void Connect(const std::string &target, const std::string &connection_flag);
+		void Send(const std::string msg);
+		std::queue<std::string> GetMsgQueue();
 
 	private:
 		void SendThread();
 		void ReceiveThread();
+		void HandleBuffer(char buffer[BUFSIZE], int cbReceived);
+
 		SOCKET m_Socket;
+		struct MsgStump
+		{
+			std::string msg;
+			std::size_t msgLength;
+		} m_Stump;
 	};
 } // namespace syb
 

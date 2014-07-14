@@ -1,136 +1,47 @@
 #ifndef SYB_GAME_HPP
 #define SYB_GAME_HPP
 
-#include <chrono>
-#include <ctime>
+#include "../events/EventManager.hpp"
 
-#include "networking/IOChannel.hpp"
 
 namespace syb
 {
 	class Game
 	{
 	public:
-		// ----------------------------------------------------------------------------
-		// Game instance initialisation arguments
-		// ----------------------------------------------------------------------------
-		enum InitArgs
-		{
-			IARG_CONNECTION_TARGET,
-			IARG_DATA_TRANSFER_MODE,
-			IARG_TIMESTEP_MODE,
-			IARG_BOT_NAME
-		};
+		virtual ~Game();
+		virtual int Run();
 
-		// ----------------------------------------------------------------------------
-		// Timestep modes
-		// ----------------------------------------------------------------------------
-		enum TimestepMode
-		{
-			TIMESTEP_FIXED,
-			TIMESTEP_VARIABLE
-		};
-		const int TS_DEF_FPS = 30;
-
-		// ----------------------------------------------------------------------------
-		// Game states
-		// ----------------------------------------------------------------------------
-		enum GameState
-		{
-			G_STATE_INIT,
-			G_STATE_RUNNING,
-			G_STATE_PAUSED
-		};
-
-	public:
-		virtual ~Game() 
-		{
-			//delete m_pWorld;
-			delete m_pIO;
-		}
-
-		virtual int Run()
-		{
-			while (m_State == G_STATE_INIT)
-			{
-				HandleEvents();
-				std::this_thread::sleep_for(std::chrono::milliseconds(50));
-			}
-
-			if (m_TimestepMode == TIMESTEP_FIXED)
-			{
-				while (m_State)
-				{
-					if (m_State == G_STATE_PAUSED)
-					{
-						std::this_thread::sleep_for(std::chrono::milliseconds(100));
-					}
-					else
-					{
-						std::clock_t tickStart = std::clock();
-
-						Update();
-
-						std::clock_t tickEnd = std::clock();
-						std::chrono::milliseconds frameSkip(1000 / m_FixedFPS - (tickEnd - tickStart));
-						if (frameSkip.count() > 0)
-							std::this_thread::sleep_for(frameSkip);
-					}
-				}
-			}
-			else if (m_TimestepMode == TIMESTEP_VARIABLE)
-			{
-				std::clock_t tickStart = std::clock();
-				double lag = 0.0;
-				while (m_State == G_STATE_RUNNING)
-				{
-					std::clock_t tickEnd = std::clock();
-					std::clock_t elapsed = tickEnd - tickStart;
-					tickStart = tickEnd;
-					lag += elapsed;
-
-					while (lag >= m_FixedFPS)
-					{
-						//Update(elapsed);
-						lag -= m_FixedFPS;
-					}
-
-					tickStart = tickEnd;
-				}
-			}
-			return 0;
-		}
-
+		Game();
 	protected:
-		Game(IBot *bot) :
-			m_pBot(bot)
-		{
-			m_State = G_STATE_INIT;
-			m_TimestepMode = TIMESTEP_FIXED;
-			m_FixedFPS = TS_DEF_FPS;
-			IOChannel::TcpConnectionParams cParams;
-			cParams.address = "sybilai.com";
-			cParams.port = "8124";
-			m_pIO = new IOChannel(bot->GetName().c_str(), IOChannel::SYB_VIS, &cParams);
-		}
 
-		virtual void Update()
-		{
-			HandleEvents();
-			m_pBot->Update();
-		}
+		/// Initialises engine "critical" systems. In case Init() is overriden, this should be called in it before anything else. 
+		void EngineInit();
 
-		//virtual void Update(double dt);
+		/// Initialises game-specific systems. 
+		virtual void Init();
+		
+		/// Gets called by the main game loop on each frame.
+		virtual void Update();
 
-		virtual void HandleEvents() = 0;
-		//virtual void CheckTriggers() = 0;
+		/// Current frame. May be used to check synch status with the authority. 
+		unsigned int m_Frame;
 
-		TimestepMode m_TimestepMode;
-		unsigned int m_FixedFPS;
-		GameState m_State;
-		IOChannel *m_pIO;
-		IBot *m_pBot;
-		BombWorld *m_pWorld;
+		/// System-wide constant constraint on updating. 
+		/// Defaults to 33333microsec = 33.3ms, but should be overriden in a derived class. 
+		/// The precision is so hight to compensate for the restricted frame time constraint. 
+		unsigned int m_FrameTime;
+
+		/// If a frame takes more than this, it's likely that there has been some debugging going on, i.e. 'slowly' stepping
+		/// through code. In such cases, only one frame should be taken into account to maintain consistency. Code-bloat atm. 
+		//int m_DebugTimeThreshold;
+
+		/// g_lobal-ish. In that sense, should be passed around to anyone interested. If EventManager weren't inheritable, it 
+		/// would be a 'true' global.  
+		EventManager* g_pEventManager;
+
+	private:
+		bool m_bEngineInitialised;
 	};
 } // namespace syb
 

@@ -1,132 +1,123 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="core">
-      <UniqueIdentifier>{482fca51-0f87-4c23-a738-feb5d3dde95c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="games">
-      <UniqueIdentifier>{76a940e1-30c0-4e5b-93b4-b42a4d084707}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="networking">
-      <UniqueIdentifier>{9e62ee21-657f-4e72-bd91-5718c18a387b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="utils">
-      <UniqueIdentifier>{793c732e-5bee-4b39-a217-c11361068f7a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ai">
-      <UniqueIdentifier>{bdd31dc1-0c75-409f-af4f-6a8faccc1e65}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="games\bomberman">
-      <UniqueIdentifier>{16c50ec6-9d17-4f38-b5b2-a665737cf930}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="core\public">
-      <UniqueIdentifier>{3012f4b1-e8b9-4a15-a2ec-3bb3d7b73ba6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="core\private">
-      <UniqueIdentifier>{ad24b45d-f92e-409d-8fab-39df8ca53b4b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="networking\public">
-      <UniqueIdentifier>{a0bedf01-69b8-4d68-8552-f9f72f7e6562}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="networking\private">
-      <UniqueIdentifier>{b7f4c743-d689-4d2f-b121-4858da9cd01b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ai\public">
-      <UniqueIdentifier>{759760df-ca59-464d-a4b1-93567413f7d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ai\private">
-      <UniqueIdentifier>{0ea0d0b9-a570-4e4c-abbb-15d3aea499d3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="utils\public">
-      <UniqueIdentifier>{fa9dfbbd-b349-4063-8f95-83290641cdeb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="utils\private">
-      <UniqueIdentifier>{804762f7-a43f-45b0-8f76-9addad4d83f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="networking\wswrapper">
-      <UniqueIdentifier>{8a15d3ab-852f-429c-8f64-b2868d5d89de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="games\bomberman\public">
-      <UniqueIdentifier>{637ac994-6267-4093-ac31-350ebb515609}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="games\bomberman\private">
-      <UniqueIdentifier>{f06674d5-359e-4945-9916-7bd435eadac0}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\core\SybDef.hpp">
-      <Filter>core\public</Filter>
-    </ClInclude>
-    <ClInclude Include="include\networking\IOChannel.hpp">
-      <Filter>networking\public</Filter>
-    </ClInclude>
-    <ClInclude Include="include\networking\ITcpSocket.hpp">
-      <Filter>networking\public</Filter>
-    </ClInclude>
-    <ClInclude Include="include\networking\WebSocket.hpp">
-      <Filter>networking\public</Filter>
-    </ClInclude>
-    <ClInclude Include="include\networking\easywsclient\easywsclient.hpp">
-      <Filter>networking\wswrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="include\core\SybDebug.hpp">
+    <ClInclude Include="include\core\Time.hpp">
       <Filter>core\public</Filter>
     </ClInclude>
     <ClInclude Include="include\core\Game.hpp">
       <Filter>core\public</Filter>
     </ClInclude>
-    <ClInclude Include="include\ai\IBot.hpp">
-      <Filter>ai\public</Filter>
+    <ClInclude Include="include\events\IEventListener.hpp">
+      <Filter>events\public</Filter>
     </ClInclude>
-    <ClInclude Include="include\core\IEntity.hpp">
-      <Filter>core\public</Filter>
+    <ClInclude Include="include\events\EventManager.hpp">
+      <Filter>events\public</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\Vec2.hpp">
-      <Filter>utils\public</Filter>
+    <ClInclude Include="include\events\IEvent.hpp">
+      <Filter>events\public</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils\Utils.hpp">
-      <Filter>utils\public</Filter>
+    <ClInclude Include="include\events\IEventFilter.hpp">
+      <Filter>events\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\networking\IODevice.hpp">
+      <Filter>networking\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\networking\IOManager.hpp">
+      <Filter>networking\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\networking\WinNamedPipe.hpp">
+      <Filter>networking\public</Filter>
     </ClInclude>
     <ClInclude Include="include\networking\WinTcpSocket.hpp">
       <Filter>networking\public</Filter>
     </ClInclude>
-    <ClInclude Include="include\ai\AStarSearch.hpp">
-      <Filter>ai\public</Filter>
+    <ClInclude Include="include\world\IComponent.hpp">
+      <Filter>world\public</Filter>
     </ClInclude>
-    <ClInclude Include="include\games\bomberman\BombEntities.hpp">
-      <Filter>games\bomberman\public</Filter>
+    <ClInclude Include="include\world\Movement.hpp">
+      <Filter>world\public</Filter>
     </ClInclude>
-    <ClInclude Include="include\games\bomberman\BombGame.hpp">
-      <Filter>games\bomberman\public</Filter>
+    <ClInclude Include="include\world\Transform.hpp">
+      <Filter>world\public</Filter>
     </ClInclude>
-    <ClInclude Include="include\games\bomberman\BombWorld.hpp">
-      <Filter>games\bomberman\public</Filter>
+    <ClInclude Include="include\world\Vec2.hpp">
+      <Filter>world\public</Filter>
     </ClInclude>
-    <ClInclude Include="include\ai\SearchTemp.hpp">
-      <Filter>ai\public</Filter>
+    <ClInclude Include="include\world\WorldManager.hpp">
+      <Filter>world\public</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\networking\WebSocket.cpp">
+    <Filter Include="core">
+      <UniqueIdentifier>{2516bdf7-547f-4abe-890f-59dae5bd212b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events">
+      <UniqueIdentifier>{3507e4e6-9057-4f5d-83c1-6eda933699b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="networking">
+      <UniqueIdentifier>{81b24c0b-e3d4-4246-934c-82ce830042c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="world">
+      <UniqueIdentifier>{4a8dbafb-00bf-4ee4-8143-7f4dd00f7345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\public">
+      <UniqueIdentifier>{4782864c-9ee5-4edb-ab52-2cef4ceabcf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\private">
+      <UniqueIdentifier>{975fdac2-95b2-440e-b14a-6ee121b4d7fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\public">
+      <UniqueIdentifier>{365d0780-f0aa-4a64-820f-2fd900471b31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="networking\public">
+      <UniqueIdentifier>{40e0ec10-90e7-4546-8c27-0e43b6d9338f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="world\public">
+      <UniqueIdentifier>{37962fd3-e715-4627-a3e1-02236278a1fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="world\private">
+      <UniqueIdentifier>{5c8aa3f9-810d-408e-820b-a0651af5cb14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="networking\private">
+      <UniqueIdentifier>{cc621ab5-b64e-4baa-9a11-35c65de0cb05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\private">
+      <UniqueIdentifier>{48ff1304-eb64-4e35-bdf6-8bd444430583}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\events\EventManager.cpp">
+      <Filter>events\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Game.cpp">
+      <Filter>core\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\events\IEvent.cpp">
+      <Filter>events\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\events\IEventFilter.cpp">
+      <Filter>events\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\events\IEventListener.cpp">
+      <Filter>events\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\networking\IOManager.cpp">
       <Filter>networking\private</Filter>
     </ClCompile>
-    <ClCompile Include="src\networking\IOChannel.cpp">
+    <ClCompile Include="src\world\Movement.cpp">
+      <Filter>world\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Time.cpp">
+      <Filter>core\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\networking\WinNamedPipe.cpp">
       <Filter>networking\private</Filter>
-    </ClCompile>
-    <ClCompile Include="include\networking\easywsclient\easywsclient.cpp">
-      <Filter>networking\wswrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="src\utils\Vec2.cpp">
-      <Filter>utils\private</Filter>
     </ClCompile>
     <ClCompile Include="src\networking\WinTcpSocket.cpp">
       <Filter>networking\private</Filter>
     </ClCompile>
-    <ClCompile Include="src\games\bomberman\BombEntities.cpp">
-      <Filter>games\bomberman\private</Filter>
-    </ClCompile>
-    <ClCompile Include="src\games\bomberman\BombWorld.cpp">
-      <Filter>games\bomberman\private</Filter>
+    <ClCompile Include="src\world\WorldManager.cpp">
+      <Filter>world\private</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
