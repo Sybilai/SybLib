@@ -2,7 +2,7 @@
 #define SYB_TRANSFORM_HPP
 
 #include "IComponent.hpp"
-#include "Vec2.hpp"
+#include "../utils/Vec2.hpp"
 
 
 namespace syb

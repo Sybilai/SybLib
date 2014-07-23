@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="core">
+      <UniqueIdentifier>{75019019-5f49-4c14-8709-93be8a586e78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="networking">
+      <UniqueIdentifier>{1e2a975a-824b-4726-bb73-e5ffd9271d82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils">
+      <UniqueIdentifier>{0c44e833-6c39-4b82-9af6-238df5337b6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\public">
+      <UniqueIdentifier>{4925203f-1e9a-4f4d-8a0b-9a0ac2b1f0f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\private">
+      <UniqueIdentifier>{5d6ea55f-4123-4c34-b9ba-a0235396c84e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="networking\public">
+      <UniqueIdentifier>{748625e6-c183-4a54-b8ea-7fef8b856d94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="networking\private">
+      <UniqueIdentifier>{2c2a6bff-4170-4029-a677-aa06ce8b2bb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\public">
+      <UniqueIdentifier>{09ec19de-0f0b-4308-8ee0-8ee100e3cde3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\private">
+      <UniqueIdentifier>{e3ea029a-5595-4cb7-8971-8c048a59856e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events">
+      <UniqueIdentifier>{fe6ccb7b-92b8-4d62-a2e2-5fc0884556ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\public">
+      <UniqueIdentifier>{01017e1f-7759-4c27-b516-6e8e6209a4ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\private">
+      <UniqueIdentifier>{3b27bb53-32c3-4022-a8e4-59c2fab5cfd2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\core\Game.hpp">
+      <Filter>core\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\IComponent.hpp">
+      <Filter>core\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\Movement.hpp">
+      <Filter>core\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\Transform.hpp">
+      <Filter>core\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\WorldManager.hpp">
+      <Filter>core\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\networking\IODevice.hpp">
+      <Filter>networking\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\networking\IOManager.hpp">
+      <Filter>networking\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\networking\WinTcpSocket.hpp">
+      <Filter>networking\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\utils\Time.hpp">
+      <Filter>utils\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\utils\Vec2.hpp">
+      <Filter>utils\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\events\IEventListener.hpp">
+      <Filter>events\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\events\IEvent.hpp">
+      <Filter>events\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\events\IEventFilter.hpp">
+      <Filter>events\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\events\EventManager.hpp">
+      <Filter>events\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\networking\WinNamedPipe.hpp">
+      <Filter>networking\public</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\utils\Time.cpp">
+      <Filter>utils\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\events\EventManager.cpp">
+      <Filter>events\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\events\IEvent.cpp">
+      <Filter>events\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\events\IEventFilter.cpp">
+      <Filter>events\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\events\IEventListener.cpp">
+      <Filter>events\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\networking\IOManager.cpp">
+      <Filter>networking\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\networking\WinTcpSocket.cpp">
+      <Filter>networking\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Game.cpp">
+      <Filter>core\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Movement.cpp">
+      <Filter>core\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\WorldManager.cpp">
+      <Filter>core\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\networking\WinNamedPipe.cpp">
+      <Filter>networking\private</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

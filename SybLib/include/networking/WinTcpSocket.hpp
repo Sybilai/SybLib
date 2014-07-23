@@ -19,8 +19,8 @@ namespace syb
 		WinTcpSocket();
 		~WinTcpSocket();
 
-		void Connect(const std::string &target, const std::string &connection_flag);
-		void Send(const std::string msg);
+		void Connect(const std::string& target, const std::string& connection_flag);
+		void Send(const std::string& msg);
 		std::queue<std::string> GetMsgQueue();
 
 	private:

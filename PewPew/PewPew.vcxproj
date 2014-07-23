@@ -11,35 +11,39 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\ai\IBot.hpp" />
-    <ClInclude Include="include\ai\WorldInterface.hpp" />
     <ClInclude Include="include\core\Game.hpp" />
-    <ClInclude Include="include\core\EngineRules.hpp" />
-    <ClInclude Include="include\core\SybDebug.hpp" />
-    <ClInclude Include="include\core\World.hpp" />
-    <ClInclude Include="include\networking\easywsclient\easywsclient.hpp" />
+    <ClInclude Include="include\core\IComponent.hpp" />
+    <ClInclude Include="include\core\Movement.hpp" />
+    <ClInclude Include="include\core\Transform.hpp" />
+    <ClInclude Include="include\core\WorldManager.hpp" />
+    <ClInclude Include="include\events\EventManager.hpp" />
+    <ClInclude Include="include\events\IEvent.hpp" />
+    <ClInclude Include="include\events\IEventFilter.hpp" />
+    <ClInclude Include="include\events\IEventListener.hpp" />
     <ClInclude Include="include\networking\IODevice.hpp" />
     <ClInclude Include="include\networking\IOManager.hpp" />
-    <ClInclude Include="include\networking\WebSocket.hpp" />
     <ClInclude Include="include\networking\WinNamedPipe.hpp" />
     <ClInclude Include="include\networking\WinTcpSocket.hpp" />
     <ClInclude Include="include\utils\Time.hpp" />
     <ClInclude Include="include\utils\Vec2.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="include\networking\easywsclient\easywsclient.cpp" />
-    <ClCompile Include="src\ai\IBot.cpp" />
     <ClCompile Include="src\core\Game.cpp" />
+    <ClCompile Include="src\core\Movement.cpp" />
+    <ClCompile Include="src\core\WorldManager.cpp" />
+    <ClCompile Include="src\events\EventManager.cpp" />
+    <ClCompile Include="src\events\IEvent.cpp" />
+    <ClCompile Include="src\events\IEventFilter.cpp" />
+    <ClCompile Include="src\events\IEventListener.cpp" />
     <ClCompile Include="src\networking\IOManager.cpp" />
-    <ClCompile Include="src\networking\WebSocket.cpp" />
     <ClCompile Include="src\networking\WinNamedPipe.cpp" />
     <ClCompile Include="src\networking\WinTcpSocket.cpp" />
     <ClCompile Include="src\utils\Time.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{F4BCB227-2D40-4F5E-B42A-C2AFA5F3323C}</ProjectGuid>
+    <ProjectGuid>{2B701C0E-C3D5-4023-9320-477295B80B1D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>SybLib</RootNamespace>
+    <RootNamespace>PewPew</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -65,17 +69,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(IncludePath)</IncludePath>
-    <OutDir>$(ProjectDir)bin\</OutDir>
-    <IntDir>$(ProjectDir)temp\$(Configuration)\</IntDir>
-    <TargetName>sybil-d</TargetName>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(ProjectDir)bin\</OutDir>
-    <IntDir>$(ProjectDir)temp\$(Configuration)\</IntDir>
-    <TargetName>sybil</TargetName>
-  </PropertyGroup>
+  <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>
@@ -83,7 +77,6 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

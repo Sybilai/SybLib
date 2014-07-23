@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Examples", "..\Examples\Exa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bomberman", "..\Bomberman\Bomberman.vcxproj", "{1553F6E0-28A2-4ACF-9B5A-CE462378B30E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PewPew", "..\PewPew\PewPew.vcxproj", "{2B701C0E-C3D5-4023-9320-477295B80B1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -27,6 +29,10 @@ Global
 		{1553F6E0-28A2-4ACF-9B5A-CE462378B30E}.Debug|Win32.Build.0 = Debug|Win32
 		{1553F6E0-28A2-4ACF-9B5A-CE462378B30E}.Release|Win32.ActiveCfg = Release|Win32
 		{1553F6E0-28A2-4ACF-9B5A-CE462378B30E}.Release|Win32.Build.0 = Release|Win32
+		{2B701C0E-C3D5-4023-9320-477295B80B1D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2B701C0E-C3D5-4023-9320-477295B80B1D}.Debug|Win32.Build.0 = Debug|Win32
+		{2B701C0E-C3D5-4023-9320-477295B80B1D}.Release|Win32.ActiveCfg = Release|Win32
+		{2B701C0E-C3D5-4023-9320-477295B80B1D}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

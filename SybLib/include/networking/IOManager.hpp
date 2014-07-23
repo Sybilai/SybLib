@@ -11,12 +11,26 @@
 #else
 #include "BsdTcpSocket.hpp"
 #endif
+#include "WebSocket.hpp"
+
+//#include "../events/IEventListener.hpp"
+
 
 namespace syb
 {
+	/*namespace ecospace
+	{
+		class IOEventListener
+		{
+		public:
+			IOEventListener()
+			void ReceiveEvent(IEvent*);
+		};
+	}*/
+
 	/// Handles data transfer between the current AI instance and an external authority:
 	/// either SybLab(the local testbench) or SybVis(the multiplayer server)
-	class IOManager
+	class IOManager //: public ecospace::IOEventListener
 	{
 	public:
 		enum ConnectionTarget
@@ -47,11 +61,13 @@ namespace syb
 		};
 
 		/// Generic to platform specific switches
-#ifdef WIN32
-#define TcpSocket WinTcpSocket
-#else
-#define TcpSocket BsdTcpSocket
-#endif
+//#ifdef WIN32
+//		using TcpSocket = WinTcpSocket;
+//#else
+//		using TcpSocket = BsdTcpSocket;
+//#endif
+		// Currently the most reliable
+		using TcpSocket = WebSocket;
 
 	public:
 		// Leave definitions empty. Loading/Unloading are handled by Init()/Shutdown()
@@ -63,7 +79,8 @@ namespace syb
 
 		void SendMsg(const std::string &msg);
 		std::queue<std::string> GetMsgQueue();
-		const bool &GetState() const;
+		//const bool &GetState() const;
+		bool GetState();
 
 	private:
 		State m_State;

@@ -3,15 +3,18 @@
 
 namespace syb
 {
+	// --------------------------------------------------------------------
 	WinNamedPipe::WinNamedPipe()
 	{ }
 
+	// --------------------------------------------------------------------
 	WinNamedPipe::~WinNamedPipe()
 	{
 		CloseHandle(m_hPipe);
 	}
 
-	void WinNamedPipe::Connect(const std::string &target, const std::string &connection_flag)
+	// --------------------------------------------------------------------
+	void WinNamedPipe::Connect(const std::string& target, const std::string& connection_flag)
 	{
 		// Connect to an existing pipe created by SybLab
 		m_hPipe = CreateFile(
@@ -33,13 +36,15 @@ namespace syb
 			NULL,
 			NULL);
 	}
-
-	void WinNamedPipe::Send(const std::string msg)
+	
+	// --------------------------------------------------------------------
+	void WinNamedPipe::Send(const std::string& msg)
 	{
 		std::lock_guard<std::mutex> lock(m_mutexSendQueue);
 		m_SendQueue.push(msg);
 	}
 
+	// --------------------------------------------------------------------
 	std::queue<std::string> WinNamedPipe::GetMsgQueue()
 	{
 		std::lock_guard<std::mutex> lock(m_mutexRecvQueue);
@@ -53,6 +58,7 @@ namespace syb
 		return temp;
 	}
 
+	// --------------------------------------------------------------------
 	void WinNamedPipe::SendThread()
 	{
 		DWORD cbWritten{};
@@ -73,6 +79,7 @@ namespace syb
 		}
 	}
 
+	// --------------------------------------------------------------------
 	void WinNamedPipe::ReceiveThread()
 	{
 		while (2 + 2 != 5)

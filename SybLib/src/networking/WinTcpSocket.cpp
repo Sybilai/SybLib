@@ -3,9 +3,11 @@
 
 namespace syb
 {
+	// --------------------------------------------------------------------
 	WinTcpSocket::WinTcpSocket()
 	{ }
 
+	// --------------------------------------------------------------------
 	WinTcpSocket::~WinTcpSocket()
 	{
 		shutdown(m_Socket, SD_BOTH);
@@ -19,7 +21,8 @@ namespace syb
 			m_threadReceive.join();
 	}
 
-	void WinTcpSocket::Connect(const std::string &target, const std::string &connection_flag)
+	// --------------------------------------------------------------------
+	void WinTcpSocket::Connect(const std::string& target, const std::string& connection_flag)
 	{
 		WSADATA wsaData;
 		WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -51,12 +54,14 @@ namespace syb
 		m_threadReceive = std::thread(&WinTcpSocket::ReceiveThread, this);
 	}
 
-	void WinTcpSocket::Send(const std::string msg)
+	// --------------------------------------------------------------------
+	void WinTcpSocket::Send(const std::string& msg)
 	{
 		std::lock_guard<std::mutex> lock(m_mutexSendQueue);
 		m_SendQueue.push(msg);
 	}
 
+	// --------------------------------------------------------------------
 	std::queue<std::string> WinTcpSocket::GetMsgQueue()
 	{
 		std::lock_guard<std::mutex> lock(m_mutexRecvQueue);
@@ -69,6 +74,7 @@ namespace syb
 		return temp;
 	}
 
+	// --------------------------------------------------------------------
 	void WinTcpSocket::SendThread()
 	{
 		while (2 + 2 != 5)
@@ -88,6 +94,7 @@ namespace syb
 		}
 	}
 
+	// --------------------------------------------------------------------
 	void WinTcpSocket::ReceiveThread()
 	{
 		while (2 + 2 != 5)
@@ -100,6 +107,7 @@ namespace syb
 		}
 	}
 
+	// --------------------------------------------------------------------
 	void WinTcpSocket::HandleBuffer(char buffer[BUFSIZE], int cbReceived)
 	{
 		std::string clean(buffer);

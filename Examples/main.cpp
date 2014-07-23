@@ -1,36 +1,30 @@
-#include "games/bomberman/BombGame.hpp"
-#include "ai/IBot.hpp"
-#include "ai/AStarSearch.hpp"
+// Assumes that bomberman.lib and bomberman-d.lib are located in (this project's directory)/lib/
+// MUST BE DEFINED BEFORE ANYTHING ELSE if it is to be used
+//#define IMPORT_LIBS_FOR_ME
+#include "../Bomberman/include/Bomberman.hpp"
+#include "../Bomberman/include/IBot.hpp"
+using namespace boom;
 
-using namespace syb;
-
-
-class Terminator : public IBot
+class MyBot : public IBot
 {
 public:
-	Terminator() : IBot("Mergla7,12") { }
-
+	MyBot(std::string name) : IBot(name) { }
 	void Update()
 	{
-		static bool t = true;
-		if (t)
-		{
-			if (m_pPos)
-			{
-				std::string path = JsonPath(Search(*m_pPos, Vec2(7,12)));
-				Send("move", &path);
-			}
-			t = false;
-		}
-		if (m_pWorld->m_Map[(int)m_pPos->x + 1][(int)m_pPos->y + 1].m_Blocks[0] == m_pWorld->BL_BOT)
-			Send("bomb");
+
 	}
 };
 
 
 int main()
 {
-	IBot *myTerminator = new Terminator();
-	BombGame game(myTerminator);
+	BombermanGame game;
+
+	IBot* myVeryOwnBot = new MyBot("Bada$$");
+	game.RegisterBot(myVeryOwnBot);
+
+	// Register some other bots to run alongside "Bada$$". Theoretically, that is the case.
+	// Currently, any bot registered after the first will invalidate the first and replace it. 
+
 	game.Run();
 }

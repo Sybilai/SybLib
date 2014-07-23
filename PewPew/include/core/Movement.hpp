@@ -3,7 +3,7 @@
 
 #include "IComponent.hpp"
 #include "Transform.hpp"
-#include "Vec2.hpp"
+#include "../utils/Vec2.hpp"
 
 
 namespace syb

@@ -1,4 +1,4 @@
-#include "../../include/world/WorldManager.hpp"
+#include "../../include/core/WorldManager.hpp"
 
 
 namespace syb

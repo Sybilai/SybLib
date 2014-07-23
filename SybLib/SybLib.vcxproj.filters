@@ -1,23 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="include\core\Time.hpp">
-      <Filter>core\public</Filter>
-    </ClInclude>
+    <Filter Include="core">
+      <UniqueIdentifier>{9c47b4be-8825-4509-8305-9c05eadf5a51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events">
+      <UniqueIdentifier>{3436d035-ec82-49ed-b0b9-7e7e5251cded}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="networking">
+      <UniqueIdentifier>{e505284c-4b6e-4e68-aeea-f002a5eed385}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils">
+      <UniqueIdentifier>{5fe659a9-18d1-4eb9-85c4-e4ed18ca2b1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\public">
+      <UniqueIdentifier>{dd21c711-7054-45af-acab-cbb35aa47407}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\private">
+      <UniqueIdentifier>{84378e49-3b6c-4b80-96b6-7d4514be5975}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\public">
+      <UniqueIdentifier>{7bf301c0-8b9d-4c49-89d3-8fe7cbd4d0a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\private">
+      <UniqueIdentifier>{fe22031f-9d92-43e1-8fe5-f5cbeac455c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="networking\public">
+      <UniqueIdentifier>{e2be9702-14f6-4d6d-b44b-71d8b9e6a303}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\public">
+      <UniqueIdentifier>{b6f520e0-61d8-491a-8a83-0ee1a253aa34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="networking\private">
+      <UniqueIdentifier>{b0b2438f-a4fa-40fe-8906-940a3d1a238e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\private">
+      <UniqueIdentifier>{3ec93ab1-e6f0-4142-9a9f-9586bdae4ba3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="networking\public\wswrapper">
+      <UniqueIdentifier>{609e3898-f102-4395-83fd-9cf36a1a3216}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ai">
+      <UniqueIdentifier>{a6cc618e-c67f-42f0-b4ca-497aaad47129}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ai\public">
+      <UniqueIdentifier>{d80895e9-b877-4a0e-9051-4f9f11f85093}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ai\private">
+      <UniqueIdentifier>{220da3a2-5dff-43e9-8ab9-422800534b8e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="include\core\Game.hpp">
       <Filter>core\public</Filter>
     </ClInclude>
-    <ClInclude Include="include\events\IEventListener.hpp">
-      <Filter>events\public</Filter>
+    <ClInclude Include="include\utils\Time.hpp">
+      <Filter>utils\public</Filter>
     </ClInclude>
-    <ClInclude Include="include\events\EventManager.hpp">
-      <Filter>events\public</Filter>
-    </ClInclude>
-    <ClInclude Include="include\events\IEvent.hpp">
-      <Filter>events\public</Filter>
-    </ClInclude>
-    <ClInclude Include="include\events\IEventFilter.hpp">
-      <Filter>events\public</Filter>
+    <ClInclude Include="include\utils\Vec2.hpp">
+      <Filter>utils\public</Filter>
     </ClInclude>
     <ClInclude Include="include\networking\IODevice.hpp">
       <Filter>networking\public</Filter>
@@ -31,84 +72,37 @@
     <ClInclude Include="include\networking\WinTcpSocket.hpp">
       <Filter>networking\public</Filter>
     </ClInclude>
-    <ClInclude Include="include\world\IComponent.hpp">
-      <Filter>world\public</Filter>
+    <ClInclude Include="include\networking\easywsclient\easywsclient.hpp">
+      <Filter>networking\public\wswrapper</Filter>
     </ClInclude>
-    <ClInclude Include="include\world\Movement.hpp">
-      <Filter>world\public</Filter>
+    <ClInclude Include="include\networking\WebSocket.hpp">
+      <Filter>networking\public</Filter>
     </ClInclude>
-    <ClInclude Include="include\world\Transform.hpp">
-      <Filter>world\public</Filter>
+    <ClInclude Include="include\ai\IBot.hpp">
+      <Filter>ai\public</Filter>
     </ClInclude>
-    <ClInclude Include="include\world\Vec2.hpp">
-      <Filter>world\public</Filter>
+    <ClInclude Include="include\ai\WorldInterface.hpp">
+      <Filter>ai\public</Filter>
     </ClInclude>
-    <ClInclude Include="include\world\WorldManager.hpp">
-      <Filter>world\public</Filter>
+    <ClInclude Include="include\core\World.hpp">
+      <Filter>core\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\SybDebug.hpp">
+      <Filter>core\public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\EngineRules.hpp">
+      <Filter>core\public</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="core">
-      <UniqueIdentifier>{2516bdf7-547f-4abe-890f-59dae5bd212b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="events">
-      <UniqueIdentifier>{3507e4e6-9057-4f5d-83c1-6eda933699b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="networking">
-      <UniqueIdentifier>{81b24c0b-e3d4-4246-934c-82ce830042c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="world">
-      <UniqueIdentifier>{4a8dbafb-00bf-4ee4-8143-7f4dd00f7345}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="core\public">
-      <UniqueIdentifier>{4782864c-9ee5-4edb-ab52-2cef4ceabcf9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="core\private">
-      <UniqueIdentifier>{975fdac2-95b2-440e-b14a-6ee121b4d7fe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="events\public">
-      <UniqueIdentifier>{365d0780-f0aa-4a64-820f-2fd900471b31}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="networking\public">
-      <UniqueIdentifier>{40e0ec10-90e7-4546-8c27-0e43b6d9338f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="world\public">
-      <UniqueIdentifier>{37962fd3-e715-4627-a3e1-02236278a1fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="world\private">
-      <UniqueIdentifier>{5c8aa3f9-810d-408e-820b-a0651af5cb14}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="networking\private">
-      <UniqueIdentifier>{cc621ab5-b64e-4baa-9a11-35c65de0cb05}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="events\private">
-      <UniqueIdentifier>{48ff1304-eb64-4e35-bdf6-8bd444430583}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\events\EventManager.cpp">
-      <Filter>events\private</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\Game.cpp">
       <Filter>core\private</Filter>
     </ClCompile>
-    <ClCompile Include="src\events\IEvent.cpp">
-      <Filter>events\private</Filter>
-    </ClCompile>
-    <ClCompile Include="src\events\IEventFilter.cpp">
-      <Filter>events\private</Filter>
-    </ClCompile>
-    <ClCompile Include="src\events\IEventListener.cpp">
-      <Filter>events\private</Filter>
+    <ClCompile Include="src\utils\Time.cpp">
+      <Filter>utils\private</Filter>
     </ClCompile>
     <ClCompile Include="src\networking\IOManager.cpp">
       <Filter>networking\private</Filter>
-    </ClCompile>
-    <ClCompile Include="src\world\Movement.cpp">
-      <Filter>world\private</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\Time.cpp">
-      <Filter>core\private</Filter>
     </ClCompile>
     <ClCompile Include="src\networking\WinNamedPipe.cpp">
       <Filter>networking\private</Filter>
@@ -116,8 +110,14 @@
     <ClCompile Include="src\networking\WinTcpSocket.cpp">
       <Filter>networking\private</Filter>
     </ClCompile>
-    <ClCompile Include="src\world\WorldManager.cpp">
-      <Filter>world\private</Filter>
+    <ClCompile Include="include\networking\easywsclient\easywsclient.cpp">
+      <Filter>networking\public\wswrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="src\networking\WebSocket.cpp">
+      <Filter>networking\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ai\IBot.cpp">
+      <Filter>ai\private</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

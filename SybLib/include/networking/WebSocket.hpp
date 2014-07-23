@@ -1,18 +1,21 @@
-#ifndef SYB_WIN_NAMEDPIPE_HPP
-#define SYB_WIN_NAMEDPIPE_HPP
+#ifndef SYB_WEBSOCKET_HPP
+#define SYB_WEBSOCKET_HPP
 
-#include <Windows.h>
+#include <winsock2.h>
+#include <string>
+#include <queue>
 
 #include "IODevice.hpp"
+#include "easywsclient/easywsclient.hpp"
 
 
 namespace syb
 {
-	class WinNamedPipe : public IODevice
+	class WebSocket : public IODevice
 	{
 	public:
-		WinNamedPipe();
-		~WinNamedPipe();
+		WebSocket();
+		~WebSocket();
 
 		void Connect(const std::string& target, const std::string& connection_flag);
 		void Send(const std::string& msg);
@@ -21,8 +24,9 @@ namespace syb
 	private:
 		void SendThread();
 		void ReceiveThread();
-		HANDLE m_hPipe;
+
+		easywsclient::WebSocket::pointer m_pSocket;
 	};
 } // namespace syb
 
-#endif // SYB_WIN_NAMEDPIPE_HPP
+#endif // SYB_WEBSOCKET_HPP

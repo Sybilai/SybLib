@@ -1,4 +1,4 @@
-#include "../../include/core/Time.hpp"
+#include "../../include/utils/Time.hpp"
 
 #include <cmath>
 #ifdef _WIN32
@@ -24,13 +24,13 @@ namespace syb
 		{
 			PlatformSpecific() : time_point{}
 			{ }
-	#ifdef _WIN32
+#ifdef _WIN32
 			LARGE_INTEGER time_point;
-	#elif defined(__linux__)
+#elif defined(__linux__)
 			timespec time_point;
-	#else
+#else
 			std::chrono::high_resolution_clock::time_point time_point;
-	#endif
+#endif
 		};
 	}
 
@@ -38,7 +38,7 @@ namespace syb
 	// Time::Clock
 	// --------------------------------------------------------------------
 	Time::Clock::Clock() //: m_pPs(nullptr)
-	{ 
+	{
 		m_pPs = new ecospace::PlatformSpecific;
 	}
 
@@ -71,7 +71,8 @@ namespace syb
 	static LARGE_INTEGER frequency{};
 #endif
 	//static int precision_table[5][5];
-	static const unsigned int precision_precalc[5] { 1 / 60, 1, std::pow(10, 3), std::pow(10, 6), std::pow(10, 9) };
+	// Explicit call to float pow instead of double pow
+	static const float precision_precalc[5] { 1.0f / 60.0f, 1.0f, std::pow(10.0f, 3.0f), std::pow(10.0f, 6.0f), std::pow(10.0f, 9.0f) };
 
 	// --------------------------------------------------------------------
 	void Time::Init()
