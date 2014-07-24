@@ -4,22 +4,37 @@
 #include "GameRules.hpp"
 #include <memory>
 #include <string>
+#include <map>
 
 
 namespace boom
 {
 	class IEntity
 	{
+	public:
+		enum class EntityType
+		{
+			PLAYER, 
+			BOMB,
+			FLAME,
+			FIXBLOCK
+		};
+		static EntityType StringToType(const std::string&);
+
+	private:
 		syb::Vec2 m_Position;
 		unsigned int m_EntityId;
+		EntityType m_Type;
+		static std::map<std::string, EntityType> m_ConversionTable;
 
 	public:
 		const syb::Vec2& Position() const;
 		void SetPosition(const syb::Vec2& position);
 		const unsigned int& Id() const;
+		const EntityType& Type() const;
 
 	protected:
-		IEntity(const unsigned int& id, const syb::Vec2& position);
+		IEntity(const unsigned int& id, const EntityType&, const syb::Vec2& position);
 	};
 
 	class IRuledEntity
@@ -42,27 +57,35 @@ namespace boom
 		};
 		static PlayerDirection StringToDirection(const std::string&);
 
-		Player(const unsigned int& id, const syb::Vec2& position, const PlayerDirection&, const std::shared_ptr<GameRules>&);
+		Player(
+			const unsigned int& id, 
+			const EntityType&,
+			const syb::Vec2& position, 
+			const PlayerDirection&, 
+			const std::shared_ptr<GameRules>&, 
+			const unsigned int& player_id);
 
 		const PlayerDirection& Direction() const;
 		void SetDirection(const PlayerDirection&);
 
-		const unsigned int& Player::Speed() const;
+		const unsigned int& PlayerId() const;
+		const unsigned int& Speed() const;
 
 	private:
 		PlayerDirection m_Direction;
+		unsigned int m_PlayerId;
 	};
 
 	class FixBlock : public IEntity
 	{
 	public:
-		FixBlock(const unsigned int& id, const syb::Vec2& position);
+		FixBlock(const unsigned int& id, const EntityType&, const syb::Vec2& position);
 	};
 
 	class Bomb : public IEntity, public IRuledEntity
 	{
 	public:
-		Bomb(const unsigned int& id, const syb::Vec2& position, const std::shared_ptr<GameRules>&);
+		Bomb(const unsigned int& id, const EntityType&, const syb::Vec2& position, const std::shared_ptr<GameRules>&);
 
 		const unsigned int& Life() const;
 		const unsigned int& Range() const;
@@ -72,15 +95,16 @@ namespace boom
 	class Flame : public IEntity, public IRuledEntity
 	{
 	public:
-		Flame(const unsigned int& id, const syb::Vec2& position, const std::shared_ptr<GameRules>&);
+		Flame(const unsigned int& id, const EntityType&, const syb::Vec2& position, const std::shared_ptr<GameRules>&);
 
 		const unsigned int& Life() const;
 	};
 
 	// --------------------------------------------------------------------
-	inline IEntity::IEntity(const unsigned int& id, const syb::Vec2& pos) :
+	inline IEntity::IEntity(const unsigned int& id, const EntityType& type, const syb::Vec2& pos) :
 		m_Position(pos),
-		m_EntityId(id)
+		m_EntityId(id),
+		m_Type(type)
 	{ }
 
 	inline void IEntity::SetPosition(const syb::Vec2& pos)
@@ -98,6 +122,16 @@ namespace boom
 		return m_EntityId;
 	}
 
+	inline const IEntity::EntityType& IEntity::Type() const
+	{
+		return m_Type;
+	}
+
+	inline IEntity::EntityType IEntity::StringToType(const std::string& type)
+	{
+		return m_ConversionTable[type];
+	}
+
 	// --------------------------------------------------------------------
 	inline IRuledEntity::IRuledEntity(const std::shared_ptr<GameRules>& rules) :
 		m_pRules(rules)
@@ -106,13 +140,16 @@ namespace boom
 	// --------------------------------------------------------------------
 	inline Player::Player(
 		const unsigned int& id, 
+		const EntityType& type,
 		const syb::Vec2& position, 
 		const PlayerDirection& direction, 
-		const std::shared_ptr<GameRules>& rules) :
+		const std::shared_ptr<GameRules>& rules,
+		const unsigned int& player_id) :
 		
-		IEntity(id, position),
+		IEntity(id, type, position),
 		IRuledEntity(rules),
-		m_Direction(direction)
+		m_Direction(direction),
+		m_PlayerId(player_id)
 	{ }
 
 	inline Player::PlayerDirection Player::StringToDirection(const std::string& direction)
@@ -139,19 +176,24 @@ namespace boom
 		m_Direction = direction;
 	}
 
+	inline const unsigned int& Player::PlayerId() const
+	{
+		return m_PlayerId;
+	}
+
 	inline const unsigned int& Player::Speed() const
 	{
 		return m_pRules->PlayerSpeed();
 	}
 
 	// -------------------------------------------------------------------
-	inline FixBlock::FixBlock(const unsigned int& id, const syb::Vec2& position) :
-		IEntity(id, position)
+	inline FixBlock::FixBlock(const unsigned int& id, const EntityType& type, const syb::Vec2& position) :
+		IEntity(id, type, position)
 	{ }
 
 	// -------------------------------------------------------------------
-	inline Bomb::Bomb(const unsigned int& id, const syb::Vec2& position, const std::shared_ptr<GameRules>& rules) :
-		IEntity(id, position),
+	inline Bomb::Bomb(const unsigned int& id, const EntityType& type, const syb::Vec2& position, const std::shared_ptr<GameRules>& rules) :
+		IEntity(id, type, position),
 		IRuledEntity(rules)
 	{ }
 
@@ -171,8 +213,8 @@ namespace boom
 	}
 
 	// -------------------------------------------------------------------
-	inline Flame::Flame(const unsigned int& id, const syb::Vec2& position, const std::shared_ptr<GameRules>& rules) :
-		IEntity(id, position),
+	inline Flame::Flame(const unsigned int& id, const EntityType& type, const syb::Vec2& position, const std::shared_ptr<GameRules>& rules) :
+		IEntity(id, type, position),
 		IRuledEntity(rules)
 	{ }
 

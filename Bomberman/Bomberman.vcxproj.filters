@@ -16,6 +16,9 @@
     <ClInclude Include="include\Entity.hpp">
       <Filter>public</Filter>
     </ClInclude>
+    <ClInclude Include="include\NavGraph.hpp">
+      <Filter>public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="public">
@@ -30,6 +33,12 @@
       <Filter>private</Filter>
     </ClCompile>
     <ClCompile Include="src\World.cpp">
+      <Filter>private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NavGraph.cpp">
+      <Filter>private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Entity.cpp">
       <Filter>private</Filter>
     </ClCompile>
   </ItemGroup>

@@ -122,5 +122,8 @@
     <ClCompile Include="src\ai\IBot.cpp">
       <Filter>ai\private</Filter>
     </ClCompile>
+    <ClCompile Include="src\ai\NavGraph.cpp">
+      <Filter>ai\private</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

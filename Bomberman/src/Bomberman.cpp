@@ -110,9 +110,13 @@ namespace boom
 		unsigned int width = m_World.m_pRules->MapWidth();
 		unsigned int height = m_World.m_pRules->MapHeight();
 
-		m_World.m_Map.resize(height);
+		// Not this, because f*** logic
+		/*m_World.m_Map.resize(height);
 		for (unsigned int h_begin = 0; h_begin != height; ++h_begin)
-			m_World.m_Map[h_begin].resize(width);
+			m_World.m_Map[h_begin].resize(width);*/
+		m_World.m_Map.resize(width);
+		for (unsigned int h_begin = 0; h_begin != width; ++h_begin)
+			m_World.m_Map[h_begin].resize(height);
 	} // HandleEGameRules()
 
 	// --------------------------------------------------------------------
@@ -257,5 +261,7 @@ namespace boom
 				}
 			}
 		}
+
+		m_World.GenerateNavGraph();
 	} // HandleEState()
 } // namespace boom

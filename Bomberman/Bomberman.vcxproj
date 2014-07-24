@@ -15,10 +15,13 @@
     <ClInclude Include="include\Entity.hpp" />
     <ClInclude Include="include\GameRules.hpp" />
     <ClInclude Include="include\IBot.hpp" />
+    <ClInclude Include="include\NavGraph.hpp" />
     <ClInclude Include="include\World.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Bomberman.cpp" />
+    <ClCompile Include="src\Entity.cpp" />
+    <ClCompile Include="src\NavGraph.cpp" />
     <ClCompile Include="src\World.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
