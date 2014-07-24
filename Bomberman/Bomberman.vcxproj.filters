@@ -10,6 +10,9 @@
     <ClInclude Include="include\GameRules.hpp">
       <Filter>public</Filter>
     </ClInclude>
+    <ClInclude Include="include\World.hpp">
+      <Filter>public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="public">
@@ -21,6 +24,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Bomberman.cpp">
+      <Filter>private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World.cpp">
       <Filter>private</Filter>
     </ClCompile>
   </ItemGroup>
