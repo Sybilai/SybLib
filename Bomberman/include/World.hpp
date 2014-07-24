@@ -1,12 +1,18 @@
 #ifndef BOOM_WORLD_HPP
 #define BOOM_WORLD_HPP
+//#include "sybil/ai/NavGraph.hpp"
 #include "sybil/utils/Vec2.hpp"
+#include "GameRules.hpp"
+#include "Entity.hpp"
 #include <string>
 #include <vector>
+#include <memory>
 
 
 namespace boom
 {
+	class World;
+
 	class Factory
 	{
 		friend class BombermanGame;
@@ -35,21 +41,35 @@ namespace boom
 
 	public:
 		/// Create an entity using buffer and send it to World
-		static void CreateEntity();
+		static void CreateEntity(World&);
 
 		/// Create an entity using the passed arg and send it to World
-		static void CreateEntity(const PropertyBuffer&);
+		static void CreateEntity(const PropertyBuffer&, World&);
 	};
 
 	class World
 	{
 	public:
+		struct Tile
+		{
+			std::vector<std::unique_ptr<IEntity>> entities;
+		};
+
+		World();
+
 		bool HasEntity(const unsigned int& id);
 
+		/// The sybil NavGraph isn't bound to any layout that the map assumes, therefore, 
+		/// generation should be different for every game.
+		void GenerateNavGraph();
+
+		std::shared_ptr<GameRules> m_pRules;
+		std::vector<std::vector<Tile>> m_Map;
 	private:
 		/// If some key isn't active then it's supposed to be in the pool. If it is not allocated, then it's neither active nor pooled. 
 		std::vector<bool> m_ActiveKeys;
+		//syb::NavGraph m_NavGraph;
 	};
-} // namespace syb
+} // namespace boom
 
 #endif // BOOM_WORLD_HPP

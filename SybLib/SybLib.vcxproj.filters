@@ -93,6 +93,9 @@
     <ClInclude Include="include\core\EngineRules.hpp">
       <Filter>core\public</Filter>
     </ClInclude>
+    <ClInclude Include="include\ai\NavGraph.hpp">
+      <Filter>ai\public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\Game.cpp">

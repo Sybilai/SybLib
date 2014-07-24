@@ -13,6 +13,9 @@
     <ClInclude Include="include\World.hpp">
       <Filter>public</Filter>
     </ClInclude>
+    <ClInclude Include="include\Entity.hpp">
+      <Filter>public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="public">

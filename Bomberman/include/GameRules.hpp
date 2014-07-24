@@ -9,6 +9,7 @@ namespace boom
 	class GameRules
 	{
 		friend class BombermanGame;
+
 	public:
 		const unsigned int& MapWidth() const;
 		const unsigned int& MapHeight() const;

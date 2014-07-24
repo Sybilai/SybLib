@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Bomberman.hpp" />
+    <ClInclude Include="include\Entity.hpp" />
     <ClInclude Include="include\GameRules.hpp" />
     <ClInclude Include="include\IBot.hpp" />
     <ClInclude Include="include\World.hpp" />

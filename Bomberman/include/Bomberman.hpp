@@ -35,7 +35,6 @@ namespace boom
 		BombermanGame();
 		~BombermanGame();
 		
-		GameRules m_Rules;
 		World m_World;
 
 	protected:

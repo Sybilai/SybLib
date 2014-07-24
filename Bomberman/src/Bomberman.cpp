@@ -56,13 +56,9 @@ namespace boom
 		{
 			std::string member = it->name.GetString();
 			if (member == "sizeN")
-			{
-				m_Rules.m_MapWidth = it->value.GetUint();
-			}
+				m_World.m_pRules->m_MapWidth = it->value.GetUint();
 			else if (member == "sizeM")
-			{
-				m_Rules.m_MapHeight = it->value.GetUint();
-			}
+				m_World.m_pRules->m_MapHeight = it->value.GetUint();
 			else if (member == "bombs")
 			{
 				for (Value::ConstMemberIterator it2 = it->value.MemberBegin(); it2 != it->value.MemberEnd(); ++it2)
@@ -70,11 +66,11 @@ namespace boom
 					std::string mem2 = it2->name.GetString();
 					unsigned int val = it2->value.GetUint();
 					if (mem2 == "life")
-						m_Rules.m_BombLife = val;
+						m_World.m_pRules->m_BombLife = val;
 					else if (mem2 == "range")
-						m_Rules.m_BombRange = val;
+						m_World.m_pRules->m_BombRange = val;
 					else if (mem2 == "speed")
-						m_Rules.m_BombSpeed = val;
+						m_World.m_pRules->m_BombSpeed = val;
 				}
 			}
 			else if (member == "flames")
@@ -84,7 +80,7 @@ namespace boom
 					std::string mem2 = it2->name.GetString();
 					unsigned int val = it2->value.GetUint();
 					if (mem2 == "life")
-						m_Rules.m_FlameLife = val;
+						m_World.m_pRules->m_FlameLife = val;
 				}
 			}
 			else if (member == "players")
@@ -94,7 +90,7 @@ namespace boom
 					std::string mem2 = it2->name.GetString();
 					unsigned int val = it2->value.GetUint();
 					if (mem2 == "speed")
-						m_Rules.m_PlayerSpeed = val;
+						m_World.m_pRules->m_PlayerSpeed = val;
 				}
 			}
 			else if (member == "currentFrame")
@@ -190,7 +186,7 @@ namespace boom
 			{
 				//m_pWorld->CreateEntity(isBlocking, mortal, type, pos, direction, id);
 				if (!m_World.HasEntity(Factory::buffer.object_id))
-					Factory::CreateEntity();
+					Factory::CreateEntity(m_World);
 			}
 		}
 	} // HandleEFrame()
@@ -205,7 +201,7 @@ namespace boom
 				// at this level, there is an array of stacked items
 				// i.e. iterate through each item in the tile stack
 				for (Value::ConstMemberIterator it = it_h->MemberBegin(); it != it_h->MemberEnd(); ++it)
-				for (Value::ConstValueIterator it_content = it->value.Begin(); it_content != it->value.End(); ++it)
+				for (Value::ConstValueIterator it_content = it->value.Begin(); it_content != it->value.End(); ++it_content)
 				{
 					// iterate through (*it_content)'s members, i.e. each stack member's members // dang
 					for (Value::ConstMemberIterator it_member = it_content->MemberBegin(); it_member != it_content->MemberEnd(); ++it_member)
@@ -213,13 +209,9 @@ namespace boom
 						std::string member = it_member->name.GetString();
 
 						if (member == "type")
-						{
 							Factory::buffer.type = it_member->value.GetString();
-						}
 						else if (member == "isBlocking")
-						{
 							Factory::buffer.is_blocking = it_member->value.GetBool();
-						}
 						else if (member == "pos")
 						{
 							for (Value::ConstMemberIterator it_coord = it_member->value.MemberBegin(); it_coord != it_member->value.MemberEnd(); ++it_coord)
@@ -232,13 +224,29 @@ namespace boom
 							}
 						}
 						else if (member == "object_id")
-						{
 							Factory::buffer.object_id = it_member->value.GetUint();
+						else if (member == "mortal")
+							Factory::buffer.is_mortal = it_member->value.GetBool();
+						else if (member == "powerups")
+						{
+
 						}
+						else if (member == "lastUpdate")
+							Factory::buffer.last_update = it_member->value.GetUint();
+						else if (member == "direction")
+							Factory::buffer.direction = it_member->value.GetString();
+						else if (member == "bombs")
+							Factory::buffer.bombs = it_member->value.GetUint();
+						else if (member == "kills")
+							Factory::buffer.kills = it_member->value.GetUint();
+						else if (member == "id")
+							Factory::buffer.id = it_member->value.GetUint();
+						else if (member == "name")
+							Factory::buffer.name = it_member->value.GetString();
 					}
 
 					if (!m_World.HasEntity(Factory::buffer.object_id))
-						Factory::CreateEntity();
+						Factory::CreateEntity(m_World);
 				}
 			}
 		}
