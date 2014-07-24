@@ -12,33 +12,14 @@ namespace syb
 	class Connection
 	{
 	public:
-		Connection(const NodeId_t& from, const NodeId_t& to, const unsigned int& cost = 0);
-		
+		Connection(const NodeId_t& from, const NodeId_t& to, const float& cost = 1.0f);
+		Connection();
+
 		NodeId_t m_FromNode;
 		NodeId_t m_ToNode;
-		unsigned int m_Cost;
+		float m_Cost;
 	};
 	
-	class NodeRecord
-	{
-	public:
-		NodeId_t node;
-		Connection connection;
-		unsigned int cost_so_far;
-		unsigned int estimated_total_cost;
-	};
-
-	class PathfindingList
-	{
-	public:
-		NodeRecord SmallestElement();
-		bool HasNode(unsigned int node);
-		NodeRecord Find(unsigned int node);
-
-		PathfindingList& operator +=(const PathfindingList& rhs);
-		PathfindingList& operator -=(const PathfindingList& rhs);
-	};
-
 	/// To be generated on a per-project basis
 	class NavGraph
 	{

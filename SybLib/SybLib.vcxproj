@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\ai\Pathfinding.hpp" />
     <ClInclude Include="include\ai\IBot.hpp" />
     <ClInclude Include="include\ai\NavGraph.hpp" />
     <ClInclude Include="include\ai\WorldInterface.hpp" />
@@ -31,6 +32,7 @@
     <ClCompile Include="include\networking\easywsclient\easywsclient.cpp" />
     <ClCompile Include="src\ai\IBot.cpp" />
     <ClCompile Include="src\ai\NavGraph.cpp" />
+    <ClCompile Include="src\ai\Pathfinding.cpp" />
     <ClCompile Include="src\core\Game.cpp" />
     <ClCompile Include="src\networking\IOManager.cpp" />
     <ClCompile Include="src\networking\WebSocket.cpp" />

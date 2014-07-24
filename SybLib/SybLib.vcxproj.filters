@@ -96,6 +96,9 @@
     <ClInclude Include="include\ai\NavGraph.hpp">
       <Filter>ai\public</Filter>
     </ClInclude>
+    <ClInclude Include="include\ai\Pathfinding.hpp">
+      <Filter>ai\public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\Game.cpp">
@@ -123,6 +126,9 @@
       <Filter>ai\private</Filter>
     </ClCompile>
     <ClCompile Include="src\ai\NavGraph.cpp">
+      <Filter>ai\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ai\Pathfinding.cpp">
       <Filter>ai\private</Filter>
     </ClCompile>
   </ItemGroup>
