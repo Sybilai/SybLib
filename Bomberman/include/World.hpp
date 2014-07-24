@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <map>
 
 
 namespace boom
@@ -52,12 +53,14 @@ namespace boom
 	public:
 		struct Tile
 		{
-			std::vector<std::unique_ptr<IEntity>> entities;
+			//std::vector<std::unique_ptr<IEntity>> entities;
+			std::vector<unsigned int> entities;
 		};
 
 		World();
 
 		bool HasEntity(const unsigned int& id);
+		void ExpendKey(const unsigned int& id);
 
 		/// The sybil NavGraph isn't bound to any layout that the map assumes, therefore, 
 		/// generation should be different for every game.
@@ -65,6 +68,7 @@ namespace boom
 
 		std::shared_ptr<GameRules> m_pRules;
 		std::vector<std::vector<Tile>> m_Map;
+		std::map<unsigned int, std::unique_ptr<IEntity>> m_Entities;
 	private:
 		/// If some key isn't active then it's supposed to be in the pool. If it is not allocated, then it's neither active nor pooled. 
 		std::vector<bool> m_ActiveKeys;

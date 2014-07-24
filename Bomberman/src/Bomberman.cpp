@@ -106,6 +106,13 @@ namespace boom
 					m_RuleBuffer.ready_for_lunch = true;
 			}
 		}
+		
+		unsigned int width = m_World.m_pRules->MapWidth();
+		unsigned int height = m_World.m_pRules->MapHeight();
+
+		m_World.m_Map.resize(height);
+		for (unsigned int h_begin = 0; h_begin != height; ++h_begin)
+			m_World.m_Map[h_begin].resize(width);
 	} // HandleEGameRules()
 
 	// --------------------------------------------------------------------
