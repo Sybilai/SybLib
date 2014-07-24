@@ -14,6 +14,8 @@ namespace boom
 	public:
 		NavGraph();
 		void Generate(World&);
+		bool Walkable(World&, const unsigned int& x, const unsigned int& y);
+		syb::NodeId_t GetNodeId(const unsigned int& x, const unsigned int& y);
 	};
 }
 

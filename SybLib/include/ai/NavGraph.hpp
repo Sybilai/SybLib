@@ -12,11 +12,11 @@ namespace syb
 	class Connection
 	{
 	public:
-		Connection(const NodeId_t& from, const NodeId_t& to, const unsigned int& cost);
-
-		NodeId_t from_node;
-		NodeId_t to_node;
-		unsigned int cost;
+		Connection(const NodeId_t& from, const NodeId_t& to, const unsigned int& cost = 0);
+		
+		NodeId_t m_FromNode;
+		NodeId_t m_ToNode;
+		unsigned int m_Cost;
 	};
 	
 	class NodeRecord

@@ -9,7 +9,11 @@ namespace syb
 	}
 
 	NavGraph::NavGraph()
-	{
+	{ }
 
-	}
+	Connection::Connection(const NodeId_t& from, const NodeId_t& to, const unsigned int& cost) :
+		m_FromNode(from),
+		m_ToNode(to),
+		m_Cost(cost)
+	{ }
 } // namespace syb
