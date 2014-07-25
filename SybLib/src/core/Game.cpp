@@ -37,7 +37,8 @@ namespace syb
 
 #pragma region MainLoop
 
-		while (2 + 2 != 5)
+		//while (2 + 2 != 5)
+		while (!m_GameOver.is_over)
 		{
 			auto frame_start = Time::GetTime();
 
@@ -62,6 +63,9 @@ namespace syb
 		}
 
 #pragma endregion
+
+		// Do some cool after-game stuff
+		return 0;
 	}
 
 	// --------------------------------------------------------------------
@@ -71,10 +75,10 @@ namespace syb
 	}
 
 	// --------------------------------------------------------------------
-	void Game::RegisterWorld(World* pWorld)
+	/*void Game::RegisterWorld(World* pWorld)
 	{
 		m_pWorld = pWorld;
-	}
+	}*/
 
 	// --------------------------------------------------------------------
 	void Game::RegisterBot(IBot* bot)
@@ -133,8 +137,8 @@ namespace syb
 		m_bEngineInitialised(false),
 		m_Frame(0),
 		m_FrameTime(1000000 / 30),
-		m_DebugTimeThreshold(1000000), // implies less than 1 FPS
-		m_pWorld(nullptr)
+		m_DebugTimeThreshold(1000000) // implies less than 1 FPS
+		//m_pWorld(nullptr)
 		//g_pEventManager(nullptr)
 	{
 
@@ -144,5 +148,9 @@ namespace syb
 		ready_for_lunch(false),
 		start_frame(0),
 		update_rate(0)
+	{ }
+
+	Game::GameOver::GameOver() :
+		is_over(false)
 	{ }
 } // namespace syb

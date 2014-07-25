@@ -4,9 +4,6 @@
     <Filter Include="core">
       <UniqueIdentifier>{9c47b4be-8825-4509-8305-9c05eadf5a51}</UniqueIdentifier>
     </Filter>
-    <Filter Include="events">
-      <UniqueIdentifier>{3436d035-ec82-49ed-b0b9-7e7e5251cded}</UniqueIdentifier>
-    </Filter>
     <Filter Include="networking">
       <UniqueIdentifier>{e505284c-4b6e-4e68-aeea-f002a5eed385}</UniqueIdentifier>
     </Filter>
@@ -18,12 +15,6 @@
     </Filter>
     <Filter Include="core\private">
       <UniqueIdentifier>{84378e49-3b6c-4b80-96b6-7d4514be5975}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="events\public">
-      <UniqueIdentifier>{7bf301c0-8b9d-4c49-89d3-8fe7cbd4d0a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="events\private">
-      <UniqueIdentifier>{fe22031f-9d92-43e1-8fe5-f5cbeac455c8}</UniqueIdentifier>
     </Filter>
     <Filter Include="networking\public">
       <UniqueIdentifier>{e2be9702-14f6-4d6d-b44b-71d8b9e6a303}</UniqueIdentifier>
@@ -129,6 +120,9 @@
       <Filter>ai\private</Filter>
     </ClCompile>
     <ClCompile Include="src\ai\Pathfinding.cpp">
+      <Filter>ai\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ai\WorldInterface.cpp">
       <Filter>ai\private</Filter>
     </ClCompile>
   </ItemGroup>

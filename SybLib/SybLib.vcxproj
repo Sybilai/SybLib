@@ -33,6 +33,7 @@
     <ClCompile Include="src\ai\IBot.cpp" />
     <ClCompile Include="src\ai\NavGraph.cpp" />
     <ClCompile Include="src\ai\Pathfinding.cpp" />
+    <ClCompile Include="src\ai\WorldInterface.cpp" />
     <ClCompile Include="src\core\Game.cpp" />
     <ClCompile Include="src\networking\IOManager.cpp" />
     <ClCompile Include="src\networking\WebSocket.cpp" />

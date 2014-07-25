@@ -12,18 +12,18 @@ namespace syb
 		// TODO: use a shared_ptr for m_pWorldInterface to avoid any snafu
 	}
 
-	void IBot::AttachWorldInterface(WorldInterface* pInterface)
+	/*void IBot::AttachWorldInterface(WorldInterface* pInterface)
 	{
 		pWorld = pInterface;
-	}
+	}*/
 
 	const std::string& IBot::Name() const
 	{
 		return m_Name;
 	}
 
-	void IBot::Identify(unsigned int id)
+	void IBot::Identify(const unsigned int& id)
 	{
-		m_MyId = id;
+		my_id = id;
 	}
-}
+} // namespace syb

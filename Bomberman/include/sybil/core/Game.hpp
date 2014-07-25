@@ -33,7 +33,7 @@ namespace syb
 		/// Initialises engine "critical" systems. In case Init() is overriden, this should be called in it before anything else. 
 		void EngineInit();
 
-		void RegisterWorld(World*);
+		//void RegisterWorld(World*);
 
 		/// Initialises game-specific systems. 
 		virtual void Init();
@@ -61,7 +61,7 @@ namespace syb
 
 		IOManager m_IOManager;
 
-		World *m_pWorld;
+		//World *m_pWorld;
 
 		/// Currently allows only one bot. Subsequent calls to RegisterBot will replace any bot already in m_pBots
 		std::vector<IBot*> m_pBots;
@@ -76,6 +76,13 @@ namespace syb
 			unsigned int start_frame;
 			unsigned int update_rate;
 		} m_RuleBuffer;
+
+		struct GameOver
+		{
+			GameOver();
+			bool is_over;
+			// other stats to be displayed after game over(filled in by the event handler)
+		} m_GameOver;
 
 	private:
 		bool m_bEngineInitialised;

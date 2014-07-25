@@ -4,7 +4,6 @@
 #include "../include/sybil/rapidjson/document.h"
 #include "../include/World.hpp"
 #include "sybil/core/Game.hpp"
-#include "GameRules.hpp"
 
 
 #if defined (_MSC_VER) && /*defined(AI) && defined(DEMOCRACY)*/ defined(IMPORT_LIBS_FOR_ME)
@@ -23,6 +22,8 @@ namespace boom
 	// class Game : public syb::Game
 	class BombermanGame : public syb::Game
 	{
+		friend class WorldInterface;
+		class IOManager;
 	public:
 		static void TestMe()
 		{
@@ -38,7 +39,10 @@ namespace boom
 		World m_World;
 
 	protected:
+		void Init();
 		void HandleEvents();
+		void Update();
+		syb::IOManager* GetIOManager();
 
 	private:
 		/// Event handlers
@@ -47,6 +51,7 @@ namespace boom
 		void HandleEGameRules(const rapidjson::Document&);
 		void HandleEFrame(const rapidjson::Document&);
 		void HandleEState(const rapidjson::Document&);
+		void HandleEGameOver(const rapidjson::Document&);
 	};
 } // namespace boom
 

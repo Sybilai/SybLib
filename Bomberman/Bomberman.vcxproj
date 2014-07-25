@@ -17,12 +17,14 @@
     <ClInclude Include="include\IBot.hpp" />
     <ClInclude Include="include\NavGraph.hpp" />
     <ClInclude Include="include\World.hpp" />
+    <ClInclude Include="include\WorldInterface.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Bomberman.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\NavGraph.cpp" />
     <ClCompile Include="src\World.cpp" />
+    <ClCompile Include="src\WorldInterface.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1553F6E0-28A2-4ACF-9B5A-CE462378B30E}</ProjectGuid>

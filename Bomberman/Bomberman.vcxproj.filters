@@ -19,6 +19,9 @@
     <ClInclude Include="include\NavGraph.hpp">
       <Filter>public</Filter>
     </ClInclude>
+    <ClInclude Include="include\WorldInterface.hpp">
+      <Filter>public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="public">
@@ -39,6 +42,9 @@
       <Filter>private</Filter>
     </ClCompile>
     <ClCompile Include="src\Entity.cpp">
+      <Filter>private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WorldInterface.cpp">
       <Filter>private</Filter>
     </ClCompile>
   </ItemGroup>

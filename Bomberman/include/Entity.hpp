@@ -28,6 +28,7 @@ namespace boom
 		static std::map<std::string, EntityType> m_ConversionTable;
 
 	public:
+		virtual ~IEntity();
 		const syb::Vec2& Position() const;
 		void SetPosition(const syb::Vec2& position);
 		const unsigned int& Id() const;
@@ -105,6 +106,9 @@ namespace boom
 		m_Position(pos),
 		m_EntityId(id),
 		m_Type(type)
+	{ }
+
+	inline IEntity::~IEntity()
 	{ }
 
 	inline void IEntity::SetPosition(const syb::Vec2& pos)

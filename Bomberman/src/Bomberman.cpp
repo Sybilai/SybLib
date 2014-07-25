@@ -1,8 +1,8 @@
-#include "../include/Bomberman.hpp"
 #include "../include/sybil/utils/Vec2.hpp"
-#include <queue>
+#include "../include/WorldInterface.hpp"
+#include "../include/Bomberman.hpp"
 #include <string>
-#include <iostream>
+#include <queue>
 
 using namespace rapidjson;
 
@@ -38,10 +38,31 @@ namespace boom
 				HandleEFrame(d);
 			else if (msg_type == "game_state")
 				HandleEState(d);
+			else if (msg_type == "game_over")
+				HandleEGameOver(d);
 
 			msgs.pop();
 		} 
 	} 
+
+	// --------------------------------------------------------------------
+	void BombermanGame::Init()
+	{
+		EngineInit();
+		WorldInterface::Init(*this);
+	}
+
+	// --------------------------------------------------------------------
+	void BombermanGame::Update()
+	{
+		HandleEvents();
+
+		if (!m_GameOver.is_over)
+		{
+			WorldInterface::UpdateBot();
+			m_pBots[0]->Update();
+		}
+	}
 
 	// --------------------------------------------------------------------
 	void BombermanGame::HandleELogin(const rapidjson::Document& d)
@@ -96,14 +117,16 @@ namespace boom
 			else if (member == "currentFrame")
 			{
 				m_RuleBuffer.start_frame = it->value.GetUint();
-				if (m_RuleBuffer.update_rate)
-					m_RuleBuffer.ready_for_lunch = true;
+				// Ready only after the game_state was received. Consider splitting the checks.
+				//if (m_RuleBuffer.update_rate)
+				//	m_RuleBuffer.ready_for_lunch = true;
 			}
 			else if (member == "framesPerSecond")
 			{
 				m_RuleBuffer.update_rate = it->value.GetUint();
-				if (m_RuleBuffer.start_frame)
-					m_RuleBuffer.ready_for_lunch = true;
+				// Ready only after the game_state was received. Consider splitting the checks.
+				//if (m_RuleBuffer.start_frame)
+				//	m_RuleBuffer.ready_for_lunch = true;
 			}
 		}
 		
@@ -146,7 +169,9 @@ namespace boom
 					{
 						std::string member2 = it3->name.GetString();
 						if (member2 == "isBlocking")
-							Factory::buffer.is_blocking = it3->value.GetBool();
+							// "mov" is not a bool, you f***ng f****
+							//Factory::buffer.is_blocking = it3->value.GetBool();
+							Factory::buffer.is_blocking = false;
 						else if (member2 == "mortal")
 							Factory::buffer.is_mortal = it3->value.GetBool();
 						else if (member2 == "type")
@@ -262,6 +287,21 @@ namespace boom
 			}
 		}
 
+		if (!m_RuleBuffer.ready_for_lunch)
+			m_RuleBuffer.ready_for_lunch = true;
+
+		WorldInterface::UpdateBot(true);
+
 		m_World.GenerateNavGraph();
 	} // HandleEState()
+
+	void BombermanGame::HandleEGameOver(const rapidjson::Document& d)
+	{
+		m_GameOver.is_over = true;
+	}
+
+	syb::IOManager* BombermanGame::GetIOManager()
+	{
+		return &m_IOManager;
+	}
 } // namespace boom

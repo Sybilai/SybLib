@@ -1,9 +1,11 @@
 // Assumes that bomberman.lib and bomberman-d.lib are located in (this project's directory)/lib/
 // MUST BE DEFINED BEFORE ANYTHING ELSE if it is to be used
 //#define IMPORT_LIBS_FOR_ME
+#include "../Bomberman/include/WorldInterface.hpp"
 #include "../Bomberman/include/Bomberman.hpp"
 #include "../Bomberman/include/IBot.hpp"
 using namespace boom;
+
 
 class MyBot : public IBot
 {
@@ -11,7 +13,8 @@ public:
 	MyBot(std::string name) : IBot(name) { }
 	void Update()
 	{
-
+		WorldInterface::GoTo(3, 0);
+		WorldInterface::PlantBomb();
 	}
 };
 
