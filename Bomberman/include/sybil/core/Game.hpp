@@ -26,6 +26,8 @@ namespace syb
 		/// the desired behavior(described hitherto), allowing for easier modification later into said behavior.
 		void RegisterBot(IBot*);
 
+		void ConsoleLog(const bool& received, const bool& sent);
+	
 	protected:
 		// Only thine offspring shall either touch or see thine private parts.
 		Game();

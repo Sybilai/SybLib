@@ -48,6 +48,7 @@ namespace boom
 			unsigned int y;
 		};
 		std::vector<Player> players;
+		std::vector<Player> players_within_range;
 
 	private:
 		unsigned int m_EntityId;

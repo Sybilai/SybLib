@@ -12,6 +12,7 @@ namespace boom
 	//unsigned int WorldInterface::m_BotId = -1;
 	std::shared_ptr<Player> WorldInterface::m_pBotEntity = nullptr;
 	WorldInterface::Target WorldInterface::m_CurrentTarget;
+	syb::Time::Clock WorldInterface::m_BombPlantTimeout;
 
 	// --------------------------------------------------------------------
 	// Outbound requests
@@ -75,7 +76,13 @@ namespace boom
 
 	void WorldInterface::PlantBomb()
 	{
-		m_pIOManager->SendMsg(GetDelimiters(R"("event":"bomb")"));
+		auto time = syb::Time::GetTime();
+
+		if (syb::Time::FromSecTo(syb::Time::Elapsed(m_BombPlantTimeout, time), syb::Time::MILISEC) > 50)
+		{
+			m_pIOManager->SendMsg(GetDelimiters(R"("event":"bomb")"));
+			m_BombPlantTimeout = time;
+		}
 	}
 
 	// --------------------------------------------------------------------
@@ -113,6 +120,14 @@ namespace boom
 
 	void WorldInterface::QueryPlayers()
 	{
+		// Wasteful, consider considering
+		m_pBot->players.erase(m_pBot->players.begin(), m_pBot->players.end());
+		m_pBot->players_within_range.erase(m_pBot->players_within_range.begin(), m_pBot->players_within_range.end());
+
+		unsigned int bot_x = m_pBot->x;
+		unsigned int bot_y = m_pBot->y;
+		unsigned int range = m_pWorld->m_pRules->BombRange();
+
 		for (auto& player : m_pWorld->m_Entities)
 		{
 			if (player.second->Type() == IEntity::EntityType::PLAYER)
@@ -121,6 +136,22 @@ namespace boom
 				if (player.second->Id() != bot_id)
 				{
 					syb::Vec2 position = player.second->Position();
+					
+					if (position.x == bot_x)
+					{
+						if ((bot_y - range <= position.y) && (bot_y + range >= position.y))
+						{
+							m_pBot->players_within_range.push_back(IBot::Player(position.x, position.y));
+						}
+					}
+					else if (position.y == bot_y)
+					{
+						if ((bot_x - range <= position.x) && (bot_x + range >= position.x))
+						{
+							m_pBot->players_within_range.push_back(IBot::Player(position.x, position.y));
+						}
+					}
+
 					m_pBot->players.push_back(IBot::Player(position.x, position.y));
 				}
 			}
@@ -140,6 +171,9 @@ namespace boom
 		
 		// Downcast syb::IBot to boom::IBot
 		m_pBot = dynamic_cast<IBot*>(game.m_pBots[0]);
+
+		// Start timeout
+		m_BombPlantTimeout = syb::Time::GetTime();
 	}
 
 	void WorldInterface::UpdateBot(const bool& update_map)
@@ -149,8 +183,12 @@ namespace boom
 			{
 				if (entity.second->Type() == IEntity::EntityType::PLAYER)
 				{
-					m_pBotEntity = std::dynamic_pointer_cast<Player>(entity.second);
-					break;
+					std::shared_ptr<Player> player = std::dynamic_pointer_cast<Player>(entity.second);
+					if (player->PlayerId() == m_pBot->my_id)
+					{
+						m_pBotEntity = player;
+						break;
+					}
 				}
 			}
 

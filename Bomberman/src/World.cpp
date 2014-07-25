@@ -116,4 +116,18 @@ namespace boom
 	{
 		m_NavGraph.Generate(*this);
 	}
+
+	// --------------------------------------------------------------------
+	void World::MoveEntity(const unsigned int& id, const syb::Vec2& new_pos)
+	{
+		m_Entities[id]->SetPosition(new_pos);
+	}
+
+	// --------------------------------------------------------------------
+	void World::DestroyEntity(const unsigned int& id)
+	{
+		m_Entities.erase(id);
+		//m_Entities[id]->~IEntity();
+		m_ActiveKeys[id] = false;
+	}
 } // namespace boom

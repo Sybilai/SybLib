@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="include\Bomberman.hpp">
-      <Filter>public</Filter>
-    </ClInclude>
     <ClInclude Include="include\IBot.hpp">
       <Filter>public</Filter>
     </ClInclude>
@@ -22,6 +19,12 @@
     <ClInclude Include="include\WorldInterface.hpp">
       <Filter>public</Filter>
     </ClInclude>
+    <ClInclude Include="include\Game.hpp">
+      <Filter>public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Bomberman.hpp">
+      <Filter>public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="public">
@@ -32,9 +35,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Bomberman.cpp">
-      <Filter>private</Filter>
-    </ClCompile>
     <ClCompile Include="src\World.cpp">
       <Filter>private</Filter>
     </ClCompile>
@@ -45,6 +45,9 @@
       <Filter>private</Filter>
     </ClCompile>
     <ClCompile Include="src\WorldInterface.cpp">
+      <Filter>private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game.cpp">
       <Filter>private</Filter>
     </ClCompile>
   </ItemGroup>

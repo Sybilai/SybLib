@@ -35,6 +35,7 @@
     <ClCompile Include="src\ai\Pathfinding.cpp" />
     <ClCompile Include="src\ai\WorldInterface.cpp" />
     <ClCompile Include="src\core\Game.cpp" />
+    <ClCompile Include="src\core\SybDebug.cpp" />
     <ClCompile Include="src\networking\IOManager.cpp" />
     <ClCompile Include="src\networking\WebSocket.cpp" />
     <ClCompile Include="src\networking\WinNamedPipe.cpp" />

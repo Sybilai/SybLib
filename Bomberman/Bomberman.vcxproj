@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Bomberman.hpp" />
+    <ClInclude Include="include\Game.hpp" />
     <ClInclude Include="include\Entity.hpp" />
     <ClInclude Include="include\GameRules.hpp" />
     <ClInclude Include="include\IBot.hpp" />
@@ -20,7 +21,7 @@
     <ClInclude Include="include\WorldInterface.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Bomberman.cpp" />
+    <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\NavGraph.cpp" />
     <ClCompile Include="src\World.cpp" />

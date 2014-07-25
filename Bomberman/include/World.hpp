@@ -67,6 +67,9 @@ namespace boom
 		/// generation should be different for every game.
 		void GenerateNavGraph();
 
+		void MoveEntity(const unsigned int& id, const syb::Vec2& new_pos);
+		void DestroyEntity(const unsigned int& id);
+
 		std::shared_ptr<GameRules> m_pRules;
 		std::vector<std::vector<Tile>> m_Map;
 		//std::map<unsigned int, std::unique_ptr<IEntity>> m_Entities;

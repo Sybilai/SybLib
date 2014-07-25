@@ -1,6 +1,6 @@
 #include "../include/sybil/utils/Vec2.hpp"
 #include "../include/WorldInterface.hpp"
-#include "../include/Bomberman.hpp"
+#include "../include/Game.hpp"
 #include <string>
 #include <queue>
 
@@ -212,11 +212,13 @@ namespace boom
 			// Do something ca$hto with the potentially partially filled buffer.
 			if (event_type == "move_entity")
 			{
-				//m_pWorld->MoveEntity(id, pos);
+				if (m_World.HasEntity(Factory::buffer.object_id))
+					m_World.MoveEntity(Factory::buffer.object_id, location);
 			}
 			else if (event_type == "destroy_entity")
 			{
-				//m_pWorld->DestroyEntity(id);
+				if (m_World.HasEntity(Factory::buffer.object_id))
+					m_World.DestroyEntity(Factory::buffer.object_id);
 			}
 			else if (event_type == "new_entity")
 			{
@@ -247,7 +249,9 @@ namespace boom
 						if (member == "type")
 							Factory::buffer.type = it_member->value.GetString();
 						else if (member == "isBlocking")
-							Factory::buffer.is_blocking = it_member->value.GetBool();
+							// TODO: tell server dude to make this a f**** bool
+							//Factory::buffer.is_blocking = it3->value.GetBool();
+							Factory::buffer.is_blocking = false;
 						else if (member == "pos")
 						{
 							for (Value::ConstMemberIterator it_coord = it_member->value.MemberBegin(); it_coord != it_member->value.MemberEnd(); ++it_coord)
@@ -270,7 +274,12 @@ namespace boom
 						else if (member == "lastUpdate")
 							Factory::buffer.last_update = it_member->value.GetUint();
 						else if (member == "direction")
-							Factory::buffer.direction = it_member->value.GetString();
+						{
+							if (it_member->value.IsString())
+								Factory::buffer.direction = it_member->value.GetString();
+							else
+								Factory::buffer.direction = it_member->value.GetUint();
+						}
 						else if (member == "bombs")
 							Factory::buffer.bombs = it_member->value.GetUint();
 						else if (member == "kills")

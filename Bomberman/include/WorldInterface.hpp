@@ -2,7 +2,8 @@
 #define BOOM_INTERFACE_HPP
 
 #include "sybil/ai/WorldInterface.hpp"
-#include "Bomberman.hpp"
+#include "sybil/utils/Time.hpp"
+#include "Game.hpp"
 #include "World.hpp"
 #include "IBot.hpp"
 #include <vector>
@@ -39,6 +40,8 @@ namespace boom
 			unsigned int x;
 			unsigned int y;
 		} static m_CurrentTarget;
+
+		static syb::Time::Clock m_BombPlantTimeout;
 	};
 }
 

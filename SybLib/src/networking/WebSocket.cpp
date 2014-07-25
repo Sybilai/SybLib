@@ -73,9 +73,10 @@ namespace syb
 
 				std::string msg = m_SendQueue.front();
 				m_pSocket->send(msg);
-#ifdef OUT_DATASTREAM
-				TRACE("Sent:\n" + msg);
-#endif
+
+				if(SybDebug::CONSOLE_LOG_SENT)
+					SybDebug::TRACE("Sent:\n" + msg);
+
 				m_SendQueue.pop();
 
 				/*if (m_mutexSock.try_lock())
@@ -90,26 +91,26 @@ namespace syb
 				}*/
 			}
 
-			//std::this_thread::sleep_for(std::chrono::milliseconds(100));
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
 	}
 
 	// --------------------------------------------------------------------
 	void WebSocket::ReceiveThread()
 	{
-		while (m_pSocket->getReadyState() != easywsclient::WebSocket::CLOSED)
+		while (m_pSocket->getReadyState() == easywsclient::WebSocket::OPEN)
 		{
-			// fu.ck.th.is.
 			m_pSocket->poll(1000);
 			m_pSocket->dispatch([this](const std::string &msg)
 			{
 				m_mutexRecvQueue.lock();
 				m_RecvQueue.push(msg);
 				m_mutexRecvQueue.unlock();
-#ifdef OUT_DATASTREAM
-				TRACE("Received:\n" + msg);
-#endif
+
+				if(SybDebug::CONSOLE_LOG_RECEIVED)
+					SybDebug::TRACE("Received:\n" + msg);
 			});
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
 	}
 }

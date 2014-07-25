@@ -1,3 +1,4 @@
+#include "../../include/core/SybDebug.hpp"
 #include "../../include/core/Game.hpp"
 #include "../../include/utils/Time.hpp"
 
@@ -153,4 +154,17 @@ namespace syb
 	Game::GameOver::GameOver() :
 		is_over(false)
 	{ }
+
+	void Game::ConsoleLog(const bool& received, const bool& sent)
+	{
+		if (received)
+			syb::SybDebug::CONSOLE_LOG_RECEIVED = 1;
+		else
+			syb::SybDebug::CONSOLE_LOG_RECEIVED = 0;
+
+		if (sent)
+			syb::SybDebug::CONSOLE_LOG_SENT = 1;
+		else
+			syb::SybDebug::CONSOLE_LOG_SENT = 0;
+	}
 } // namespace syb
