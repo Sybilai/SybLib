@@ -1,6 +1,7 @@
 #include "../../include/networking/WebSocket.hpp"
 #include "../../include/core/SybDebug.hpp"
 #include <exception>
+#include <conio.h>
 
 
 namespace syb
@@ -15,8 +16,14 @@ namespace syb
 		const char* what() const throw() { return "Server is unreachable"; }
 	} err_unreachable;
 
+	class ExGameOver : public std::exception
+	{
+		const char* what() const throw() { return "Game is over"; }
+	} err_game_over;
+
 	// --------------------------------------------------------------------
-	WebSocket::WebSocket()
+	WebSocket::WebSocket() :
+		m_pSocket(nullptr)
 	{ }
 
 	// --------------------------------------------------------------------
@@ -86,11 +93,16 @@ namespace syb
 
 				try
 				{
+					//if (!m_pSocket)
+					//	throw err_unreachable;
+
 					switch (m_pSocket->getReadyState())
 					{
 					case easywsclient::WebSocket::OPEN:
 						m_pSocket->send(msg);
 						m_SendQueue.pop();
+						if (SybDebug::CONSOLE_LOG_SENT)
+							SybDebug::TRACE("Sent:\n" + msg);
 						break;
 
 					case easywsclient::WebSocket::CONNECTING:
@@ -110,10 +122,9 @@ namespace syb
 				{
 					std::string err = "Failed to send message:\n";
 					SybDebug::TRACE(err + e.what());
+					std::this_thread::sleep_for(std::chrono::milliseconds(100));
+					_getch();
 				}
-
-				if(SybDebug::CONSOLE_LOG_SENT)
-					SybDebug::TRACE("Sent:\n" + msg);
 
 				/*if (m_mutexSock.try_lock())
 				{
@@ -138,12 +149,27 @@ namespace syb
 		{
 			try
 			{
+				//if (!m_pSocket)
+				//	throw err_unreachable;
+
 				switch (m_pSocket->getReadyState())
 				{
 					case easywsclient::WebSocket::OPEN:
 						m_pSocket->poll(1000);
 						m_pSocket->dispatch([this](const std::string &msg)
 						{
+							if (msg.find("game_over") != std::string::npos)
+							{
+								m_pSocket->close();
+
+								m_mutexRecvQueue.lock();
+								std::queue<std::string> empty_q;
+								std::swap(m_RecvQueue, empty_q);
+								m_RecvQueue.push(msg);
+								m_mutexRecvQueue.unlock();
+								throw err_game_over;
+							}
+
 							m_mutexRecvQueue.lock();
 							m_RecvQueue.push(msg);
 							m_mutexRecvQueue.unlock();
@@ -170,6 +196,8 @@ namespace syb
 			{
 				std::string err = "Failed to poll message:\n";
 				SybDebug::TRACE(err + e.what());
+				std::this_thread::sleep_for(std::chrono::milliseconds(100));
+				_getch();
 			}
 
 			std::this_thread::sleep_for(std::chrono::milliseconds(100));
