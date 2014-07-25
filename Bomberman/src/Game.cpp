@@ -193,8 +193,13 @@ namespace boom
 						}
 						else if (member2 == "lastUpdate")
 							Factory::buffer.last_update = it3->value.GetUint();
-						else if (member2 == "direction")
-							Factory::buffer.direction = it3->value.GetString();
+						else if (member == "direction")
+						{
+							if (it3->value.IsString())
+								Factory::buffer.direction = it3->value.GetString();
+							else
+								Factory::buffer.direction = "invalid_array";
+						}
 						else if (member2 == "bombs")
 							Factory::buffer.bombs = it3->value.GetUint();
 						else if (member2 == "kills")
@@ -278,7 +283,7 @@ namespace boom
 							if (it_member->value.IsString())
 								Factory::buffer.direction = it_member->value.GetString();
 							else
-								Factory::buffer.direction = it_member->value.GetUint();
+								Factory::buffer.direction = "invalid_array";
 						}
 						else if (member == "bombs")
 							Factory::buffer.bombs = it_member->value.GetUint();

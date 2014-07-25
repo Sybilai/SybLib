@@ -71,7 +71,7 @@ typedef int socket_t;
 #include <vector>
 #include <string>
 
-#include "easywsclient.hpp"
+#include "../../../include/networking/easywsclient/easywsclient.hpp"
 
 namespace { // private module-only namespace
 

@@ -1,3 +1,6 @@
+#ifndef BOOM_STICK_HPP
+#define BOOM_STICK_HPP
+
 #include "WorldInterface.hpp"
 #include "Game.hpp"
 #include "IBot.hpp"
@@ -11,3 +14,5 @@ using namespace boom;
 		#pragma comment(lib, "lib/bomberman.lib")
 	#endif
 #endif
+
+#endif // BOOM_STICK_HPP

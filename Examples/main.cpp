@@ -29,7 +29,7 @@ public:
 int main()
 {
 	BombermanGame game;
-	game.ConsoleLog(false, true);
+	game.ConsoleLog(true, true);
 
 	IBot* myVeryOwnBot = new MyBot("hug4");
 	game.RegisterBot(myVeryOwnBot);

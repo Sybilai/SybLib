@@ -1,9 +1,20 @@
 #include "../../include/networking/WebSocket.hpp"
 #include "../../include/core/SybDebug.hpp"
+#include <exception>
 
 
 namespace syb
 {
+	class ExConnecting : public std::exception
+	{
+		const char* what() const throw() { return "Still trying to connect."; }
+	} err_connecting;
+
+	class ExUnreachable : public std::exception
+	{
+		const char* what() const throw() { return "Server is unreachable"; }
+	} err_unreachable;
+
 	// --------------------------------------------------------------------
 	WebSocket::WebSocket()
 	{ }
@@ -72,12 +83,37 @@ namespace syb
 				std::lock_guard<std::mutex> lock(m_mutexSendQueue);
 
 				std::string msg = m_SendQueue.front();
-				m_pSocket->send(msg);
+
+				try
+				{
+					switch (m_pSocket->getReadyState())
+					{
+					case easywsclient::WebSocket::OPEN:
+						m_pSocket->send(msg);
+						m_SendQueue.pop();
+						break;
+
+					case easywsclient::WebSocket::CONNECTING:
+						throw err_connecting;
+						break;
+
+					case easywsclient::WebSocket::CLOSED:
+						throw err_unreachable;
+						break;
+					
+					case easywsclient::WebSocket::CLOSING:
+						throw err_unreachable;
+						break;
+					}
+				}
+				catch (std::exception& e)
+				{
+					std::string err = "Failed to send message:\n";
+					SybDebug::TRACE(err + e.what());
+				}
 
 				if(SybDebug::CONSOLE_LOG_SENT)
 					SybDebug::TRACE("Sent:\n" + msg);
-
-				m_SendQueue.pop();
 
 				/*if (m_mutexSock.try_lock())
 				{
@@ -98,18 +134,44 @@ namespace syb
 	// --------------------------------------------------------------------
 	void WebSocket::ReceiveThread()
 	{
-		while (m_pSocket->getReadyState() == easywsclient::WebSocket::OPEN)
+		while (2 + 2 != 5)
 		{
-			m_pSocket->poll(1000);
-			m_pSocket->dispatch([this](const std::string &msg)
+			try
 			{
-				m_mutexRecvQueue.lock();
-				m_RecvQueue.push(msg);
-				m_mutexRecvQueue.unlock();
+				switch (m_pSocket->getReadyState())
+				{
+					case easywsclient::WebSocket::OPEN:
+						m_pSocket->poll(1000);
+						m_pSocket->dispatch([this](const std::string &msg)
+						{
+							m_mutexRecvQueue.lock();
+							m_RecvQueue.push(msg);
+							m_mutexRecvQueue.unlock();
 
-				if(SybDebug::CONSOLE_LOG_RECEIVED)
-					SybDebug::TRACE("Received:\n" + msg);
-			});
+							if (SybDebug::CONSOLE_LOG_RECEIVED)
+								SybDebug::TRACE("Received:\n" + msg);
+						});
+						break;
+
+					case easywsclient::WebSocket::CONNECTING:
+						throw err_connecting;
+						break;
+
+					case easywsclient::WebSocket::CLOSED:
+						throw err_unreachable;
+						break;
+
+					case easywsclient::WebSocket::CLOSING:
+						throw err_unreachable;
+						break;
+				}
+			}
+			catch (std::exception& e)
+			{
+				std::string err = "Failed to poll message:\n";
+				SybDebug::TRACE(err + e.what());
+			}
+
 			std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
 	}

@@ -40,6 +40,9 @@
     <Filter Include="ai\private">
       <UniqueIdentifier>{220da3a2-5dff-43e9-8ab9-422800534b8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="networking\private\wswrapper">
+      <UniqueIdentifier>{6a80c59a-9984-4784-a9a3-71ac8c7adc98}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\core\Game.hpp">
@@ -107,9 +110,6 @@
     <ClCompile Include="src\networking\WinTcpSocket.cpp">
       <Filter>networking\private</Filter>
     </ClCompile>
-    <ClCompile Include="include\networking\easywsclient\easywsclient.cpp">
-      <Filter>networking\public\wswrapper</Filter>
-    </ClCompile>
     <ClCompile Include="src\networking\WebSocket.cpp">
       <Filter>networking\private</Filter>
     </ClCompile>
@@ -127,6 +127,9 @@
     </ClCompile>
     <ClCompile Include="src\core\SybDebug.cpp">
       <Filter>core\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\networking\easywsclient\easywsclient.cpp">
+      <Filter>networking\private\wswrapper</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

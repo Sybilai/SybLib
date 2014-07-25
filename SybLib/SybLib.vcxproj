@@ -29,13 +29,13 @@
     <ClInclude Include="include\utils\Vec2.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="include\networking\easywsclient\easywsclient.cpp" />
     <ClCompile Include="src\ai\IBot.cpp" />
     <ClCompile Include="src\ai\NavGraph.cpp" />
     <ClCompile Include="src\ai\Pathfinding.cpp" />
     <ClCompile Include="src\ai\WorldInterface.cpp" />
     <ClCompile Include="src\core\Game.cpp" />
     <ClCompile Include="src\core\SybDebug.cpp" />
+    <ClCompile Include="src\networking\easywsclient\easywsclient.cpp" />
     <ClCompile Include="src\networking\IOManager.cpp" />
     <ClCompile Include="src\networking\WebSocket.cpp" />
     <ClCompile Include="src\networking\WinNamedPipe.cpp" />
