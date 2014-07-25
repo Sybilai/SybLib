@@ -24,11 +24,21 @@ namespace boom
 		static void Init(BombermanGame&);
 		static void UpdateBot(const bool& update_map = false);
 
+		static void QueryMap();
+		static void QueryPlayers();
+
 		static std::string GetDelimiters(const std::string& msg);
 		
 		static IBot* m_pBot;
 		static std::shared_ptr<Player> m_pBotEntity;
 		static World* m_pWorld;
+
+		struct Target
+		{
+			Target();
+			unsigned int x;
+			unsigned int y;
+		} static m_CurrentTarget;
 	};
 }
 

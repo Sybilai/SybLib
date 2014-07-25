@@ -17,6 +17,7 @@ namespace syb
 
 	struct PathfindingList
 	{
+		PathfindingList();
 		NodeRecord SmallestElement();
 		bool HasNode(unsigned int node);
 		NodeRecord Find(unsigned int node);

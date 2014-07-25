@@ -50,6 +50,7 @@ namespace boom
 
 	class World
 	{
+		friend class WorldInterface;
 	public:
 		struct Tile
 		{

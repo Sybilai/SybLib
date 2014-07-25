@@ -13,8 +13,10 @@ public:
 	MyBot(std::string name) : IBot(name) { }
 	void Update()
 	{
-		WorldInterface::GoTo(3, 0);
-		WorldInterface::PlantBomb();
+		if (players.size())
+		{
+			WorldInterface::GoTo(players[0].x, players[0].y);
+		}
 	}
 };
 

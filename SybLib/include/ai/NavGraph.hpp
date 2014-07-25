@@ -1,7 +1,7 @@
 #ifndef SYB_NAVGRAPH_HPP
 #define SYB_NAVGRAPH_HPP
 #include <vector>
-#include <list>
+#include <map>
 
 
 namespace syb
@@ -28,7 +28,7 @@ namespace syb
 
 	protected:
 		NavGraph();
-		std::vector<Connection> m_Connections;
+		std::map<NodeId_t, std::vector<Connection>> m_Connections;
 	};
 } // namespace syb
 

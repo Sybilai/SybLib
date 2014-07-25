@@ -1,6 +1,8 @@
 #include "../include/sybil/networking/IOManager.hpp"
+#include "../include/sybil/ai/Pathfinding.hpp"
 #include "../include/WorldInterface.hpp"
 #include <memory>
+#include <map>
 
 
 namespace boom
@@ -9,13 +11,66 @@ namespace boom
 	IBot* WorldInterface::m_pBot = nullptr;
 	//unsigned int WorldInterface::m_BotId = -1;
 	std::shared_ptr<Player> WorldInterface::m_pBotEntity = nullptr;
+	WorldInterface::Target WorldInterface::m_CurrentTarget;
 
 	// --------------------------------------------------------------------
 	// Outbound requests
 	// --------------------------------------------------------------------
 	void WorldInterface::GoTo(const unsigned int& x, const unsigned int& y)
 	{
-		//std::cout << m_pWorld->m_Map[x][y].entities[0];
+		if (x != m_CurrentTarget.x && y != m_CurrentTarget.y)
+		{
+			std::vector<syb::Connection> path = 
+				syb::Dijkstra::Search(&m_pWorld->m_NavGraph, NavGraph::GetNodeId(m_pBot->x, m_pBot->y), NavGraph::GetNodeId(x, y));
+
+			//static std::map<unsigned int, std::string> directions = { { 0, "up" }, { 1, "left" }, { 2, "right" }, { 3, "down" } };
+
+			//std::vector<std::string> directions;
+			std::string directions = R"("event":"move", "direction": [)";
+
+			for (auto tile = path.begin(), end = path.end(); tile != end; ++tile)
+			{
+				syb::NodeId_t from_node = tile->m_FromNode;
+				syb::NodeId_t to_node = tile->m_ToNode;
+
+				// TODO: Use a function to be consistent with GetNodeId()'s formula.
+				// node_id = x * 1000 + y
+				// node_id / 1000 = x
+				// node_id % 1000 = y
+				unsigned int from_x = from_node / 1000;
+				unsigned int from_y = from_node % 1000;
+				unsigned int to_x = to_node / 1000;
+				unsigned int to_y = to_node % 1000;
+
+				if (from_y == to_y)
+				{
+					// On the same line(i.e. move sideways)
+					if (from_x > to_x)
+						//directions.push_back("left");
+						directions += R"("left",)";
+					else
+						//directions.push_back("right");
+						directions += R"("right",)";
+				}
+				else
+				{
+					// On the same column(i.e. move... vertiways(?))
+					if (from_y > to_y)
+						//directions.push_back("up");
+						directions += R"("up",)";
+					else
+						//directions.push_back("down");
+						directions += R"("down",)";
+				}
+			}
+
+			directions.erase(directions.end() - 1);
+			directions += "]";
+			m_pIOManager->SendMsg(GetDelimiters(directions));
+
+			m_CurrentTarget.x = x;
+			m_CurrentTarget.y = y;
+		}
 	}
 
 	void WorldInterface::PlantBomb()
@@ -24,9 +79,53 @@ namespace boom
 	}
 
 	// --------------------------------------------------------------------
-	// Inbound requests
+	// Inbound requests. Currently, querying is unnecessary, since the bots' "senses" are updated
+	// frame-by-frame through UpdateBot()
 	// --------------------------------------------------------------------
+	void WorldInterface::QueryMap()
+	{
+		unsigned int width = m_pWorld->m_pRules->MapWidth();
+		unsigned int height = m_pWorld->m_pRules->MapHeight();
 
+		if (m_pBot->world.empty())
+		{
+			m_pBot->world.resize(width);
+			for (unsigned int h = 0; h != width; ++h)
+				m_pBot->world[h].resize(height);
+		}
+
+		for (unsigned int x = 0; x < width; ++x)
+		{
+			for (unsigned int y = 0; y < height; ++y)
+			{
+				if (m_pWorld->m_Map[x][y].entities.size())
+				{
+					if (m_pWorld->m_Entities[m_pWorld->m_Map[x][y].entities[0]]->Type() == IEntity::EntityType::FIXBLOCK)
+						m_pBot->world[x][y] = IBot::FIXLBOCK;
+					else
+						m_pBot->world[x][y] = IBot::WALKABLE;
+				}
+				else
+					m_pBot->world[x][y] = IBot::EMPTY;
+			}
+		}
+	}
+
+	void WorldInterface::QueryPlayers()
+	{
+		for (auto& player : m_pWorld->m_Entities)
+		{
+			if (player.second->Type() == IEntity::EntityType::PLAYER)
+			{
+				unsigned int bot_id = m_pBotEntity->Id();
+				if (player.second->Id() != bot_id)
+				{
+					syb::Vec2 position = player.second->Position();
+					m_pBot->players.push_back(IBot::Player(position.x, position.y));
+				}
+			}
+		}
+	}
 
 	// --------------------------------------------------------------------
 	WorldInterface::WorldInterface()
@@ -63,34 +162,15 @@ namespace boom
 		m_pBot->y = (unsigned int)m_pBotEntity->Position().y;
 
 		if (update_map)
-		{
-			unsigned int width = m_pWorld->m_pRules->MapWidth();
-			unsigned int height = m_pWorld->m_pRules->MapHeight();
-			
-			if (m_pBot->world.empty())
-			{
-				m_pBot->world.resize(width);
-				for (unsigned int h = 0; h != width; ++h)
-					m_pBot->world[h].resize(height);
-			}
+			QueryMap();
 
-			for (unsigned int x = 0; x < width; ++x)
-			{
-				for (unsigned int y = 0; y < height; ++y)
-				{
-					if (m_pWorld->m_Map[x][y].entities.size())
-					{
-						if (m_pWorld->m_Entities[m_pWorld->m_Map[x][y].entities[0]]->Type() == IEntity::EntityType::FIXBLOCK)
-							m_pBot->world[x][y] = IBot::FIXLBOCK;
-						else
-							m_pBot->world[x][y] = IBot::WALKABLE;
-					}
-					else
-						m_pBot->world[x][y] = IBot::EMPTY;
-				}
-			}
-		}
+		QueryPlayers();
 	}
+
+	WorldInterface::Target::Target() :
+		x(0),
+		y(0)
+	{ }
 
 	std::string WorldInterface::GetDelimiters(const std::string& msg)
 	{

@@ -5,7 +5,7 @@ namespace syb
 {
 	std::vector<Connection> NavGraph::GetConnections(NodeId_t from_node)
 	{
-		std::vector<Connection> connections;
+		/*std::vector<Connection> connections;
 		int edges = 0;
 		for (auto it = m_Connections.begin(), end = m_Connections.end(); (it != end) || (edges != 4); ++it)
 		{
@@ -15,7 +15,9 @@ namespace syb
 				connections.push_back(*it);
 			}
 		}
-		return m_Connections;
+		return m_Connections;*/
+
+		return m_Connections[from_node];
 	}
 
 	NavGraph::NavGraph()

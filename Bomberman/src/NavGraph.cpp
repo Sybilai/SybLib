@@ -3,6 +3,7 @@
 #include <queue>
 //#include <set>
 #include <unordered_set>
+#include <utility>
 
 
 namespace boom
@@ -72,16 +73,20 @@ namespace boom
 				frontier.pop();
 
 				syb::NodeId_t current_id = GetNodeId(current.x, current.y);
+				std::vector<syb::Connection> connections;
+
 				for (int direction = 0; direction < 4; ++direction)
 				{
 					int x = current.x + dir_x[direction];
 					int y = current.y + dir_y[direction];
 
-					unsigned int target_id = GetNodeId(x, y);
+					syb::NodeId_t target_id = GetNodeId(x, y);
 
 					if (Walkable(world, x, y))
 					{
-						m_Connections.push_back(syb::Connection(current_id, target_id, 0));
+						//m_Connections.insert(std::pair<syb::NodeId_t, syb::Connection>(current_id, syb::Connection(current_id, target_id, 0)));
+						//m_Connections.push_back(syb::Connection(current_id, target_id, 0));
+						connections.push_back(syb::Connection(current_id, target_id));
 						if (closed.find(target_id) == closed.end())
 						{
 							frontier.push(Coord(x, y));
@@ -89,6 +94,8 @@ namespace boom
 						}
 					}
 				}
+				
+				m_Connections[current_id] = connections;
 				//closed.insert(current_id);
 			}
 		}
