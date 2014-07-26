@@ -42,12 +42,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)LaunchFromHere\</OutDir>
-    <IntDir>$(ProjectDir)temp\$(Configuration)</IntDir>
+    <IntDir>$(ProjectDir)temp\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)LaunchFromHere\</OutDir>
-    <IntDir>$(ProjectDir)temp\$(Configuration)</IntDir>
+    <IntDir>$(ProjectDir)temp\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

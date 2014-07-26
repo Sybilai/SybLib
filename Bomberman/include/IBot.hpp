@@ -25,52 +25,70 @@ namespace boom
 		virtual void Update() = 0;
 
 	protected:
-		/// Tile the bot most likely is in.
+		/// Tile the bot is in(at?)
 		unsigned int x, y;
 
+		// --------------------------------------------------------------------
+		/// Data representations relevant to bots. Don't necessarily match the interal representations.
+		// --------------------------------------------------------------------
+
 		/// Avoid scoping
-		enum 
+		enum
 		{
 			WALKABLE = 0,
 			EMPTY = 0,
-			FIXLBOCK = 1
+			FIXLBOCK = 1,
+			FLAME = 2
 		};
-
-		/// Stores an image of the world, so that querying every frame is not necessary.
-		std::vector<std::vector<unsigned int>> world;
 
 		struct Player
 		{
 			Player(const unsigned int& x_, const unsigned int& y_);
 			Player(const float& x_, const float& y_);
-
-			unsigned int x;
-			unsigned int y;
+			unsigned int x, y;
 		};
+		
+		struct Bomb
+		{
+			Bomb(const unsigned int& x_, const unsigned int& y_);
+			Bomb(const float& x_, const float& y_);
+			unsigned int x, y;
+		};
+
+		// --------------------------------------------------------------------
+		/// Store an image of the world that would be relevant to a bot.
+		// --------------------------------------------------------------------
+		std::vector<std::vector<unsigned int>> world;
+
+		std::vector<Bomb  > bombs;
 		std::vector<Player> players;
+		std::vector<Bomb  > bombs_within_range;
 		std::vector<Player> players_within_range;
 
 	private:
 		unsigned int m_EntityId;
 	};
 
-	inline IBot::IBot(std::string name/*, const BombermanGame& game*/) :
-		syb::IBot(name)
-	{
-		//this->pWorld = game.m_Interface;
-	}
+	inline IBot::IBot(std::string name) : syb::IBot(name)
+	{ /*this->pWorld = game.m_Interface;*/ }
 
 	inline IBot::~IBot()
 	{ }
 
 	inline IBot::Player::Player(const unsigned int& x_, const unsigned int& y_) :
-		x(x_),
-		y(y_)
+		x(x_), y(y_)
 	{ }
 
 	inline IBot::Player::Player(const float& x_, const float& y_) :
-		x((unsigned int)x_),
-		y((unsigned int)y_)
+		x((unsigned int)x_), y((unsigned int)y_)
+	{ }
+
+	inline IBot::Bomb::Bomb(const unsigned int& x_, const unsigned int& y_) :
+		x(x_), y(y_)
+	{ }
+
+	inline IBot::Bomb::Bomb(const float& x_, const float& y_) :
+		x((unsigned int)x_), y((unsigned int)y_)
 	{ }
 } // namespace boom
 

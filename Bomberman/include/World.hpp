@@ -18,6 +18,7 @@ namespace boom
 	{
 		friend class BombermanGame;
 
+	public:
 		/// New event descriptor. Entity agnostic. Allocated once and used for every entity that needs the factory's services.
 		struct PropertyBuffer
 		{
@@ -38,6 +39,7 @@ namespace boom
 			std::string name;
 		};
 
+	private:
 		static PropertyBuffer buffer;
 
 	public:
@@ -69,16 +71,23 @@ namespace boom
 		void GenerateNavGraph();
 
 		void MoveEntity(const unsigned int& id, const syb::Vec2& new_pos);
-		void DestroyEntity(const unsigned int& id);
+		/// Assumes DestroyEntity() is called only after a "frame" event from the authority
+		void DestroyEntity(const Factory::PropertyBuffer&);
 
-		// Avoid any(or too many) accessors for stability and performance purposes when it comes to world representation: 
-		// adding indirection upon indirection to often accessed data like these would prove unfruitful.
+		/// Avoid any(or too many) accessors for stability and performance purposes when it comes to world representation: 
+		/// adding indirection upon indirection to often accessed data like these would prove unfruitful.
 		std::shared_ptr<GameRules> m_pRules;
 		std::vector<std::vector<Tile>> m_Map;
 		
-		// The interface may request pointers to existent entities. This avoids some unnecessary querying 
+		/// The interface may request pointers to existent entities. This avoids some unnecessary querying 
 		//std::map<unsigned int, std::unique_ptr<IEntity>> m_Entities;
 		std::map<unsigned int, std::shared_ptr<IEntity>> m_Entities;
+
+		/// Slash off some checks when querying(i.e. gotta go fast)
+		std::vector<unsigned int> m_PlayerKeys;
+		std::vector<unsigned int> m_FlameKeys;
+		std::vector<unsigned int> m_BombKeys;
+
 
 	private:
 		/// If some key isn't active then it's supposed to be in the pool. If it is not allocated, then it's neither active nor pooled. 

@@ -19,13 +19,14 @@ namespace boom
 	public:
 		static void GoTo(const unsigned int& x, const unsigned int& y);
 		static void PlantBomb();
-		
+
 	private:
 		WorldInterface();
 		static void Init(BombermanGame&);
 		static void UpdateBot(const bool& update_map = false);
 
 		static void QueryMap();
+		static void QueryBombs();
 		static void QueryPlayers();
 
 		static std::string GetDelimiters(const std::string& msg);

@@ -78,7 +78,7 @@ namespace boom
 	{
 		auto time = syb::Time::GetTime();
 
-		if (syb::Time::FromSecTo(syb::Time::Elapsed(m_BombPlantTimeout, time), syb::Time::MILISEC) > 500)
+		if (syb::Time::FromSecTo(syb::Time::Elapsed(m_BombPlantTimeout, time), syb::Time::MILISEC) > 300)
 		{
 			m_pIOManager->SendMsg(GetDelimiters(R"("event":"bomb")"));
 			m_BombPlantTimeout = time;
@@ -86,7 +86,7 @@ namespace boom
 	}
 
 	// --------------------------------------------------------------------
-	// Inbound requests. Currently, querying is unnecessary, since the bots' "senses" are updated
+	// Inbound requests. Currently, querying by bots is unnecessary, since the bots' "senses" are updated
 	// frame-by-frame through UpdateBot()
 	// --------------------------------------------------------------------
 	void WorldInterface::QueryMap()
@@ -127,35 +127,86 @@ namespace boom
 		unsigned int bot_x = m_pBot->x;
 		unsigned int bot_y = m_pBot->y;
 		unsigned int range = m_pWorld->m_pRules->BombRange();
+		unsigned int bot_id = m_pBotEntity->Id();
 
-		for (auto& player : m_pWorld->m_Entities)
+		for (auto& key : m_pWorld->m_PlayerKeys)
 		{
-			if (player.second->Type() == IEntity::EntityType::PLAYER)
+			if (m_pWorld->m_Entities[key]->Id() != bot_id)
 			{
-				unsigned int bot_id = m_pBotEntity->Id();
-				if (player.second->Id() != bot_id)
-				{
-					syb::Vec2 position = player.second->Position();
-					
-					if (position.x == bot_x)
-					{
-						if ((bot_y - range <= position.y) && (bot_y + range >= position.y))
-						{
-							m_pBot->players_within_range.push_back(IBot::Player(position.x, position.y));
-						}
-					}
-					else if (position.y == bot_y)
-					{
-						if ((bot_x - range <= position.x) && (bot_x + range >= position.x))
-						{
-							m_pBot->players_within_range.push_back(IBot::Player(position.x, position.y));
-						}
-					}
+				syb::Vec2 position = m_pWorld->m_Entities[key]->Position();
 
-					m_pBot->players.push_back(IBot::Player(position.x, position.y));
+				if (position.x == bot_x)
+				{
+					if ((bot_y - range <= position.y) && (bot_y + range >= position.y))
+						m_pBot->players_within_range.push_back(IBot::Player(position.x, position.y));
+				}
+				else if (position.y == bot_y)
+				{
+					if ((bot_x - range <= position.x) && (bot_x + range >= position.x))
+						m_pBot->players_within_range.push_back(IBot::Player(position.x, position.y));
+				}
+
+				m_pBot->players.push_back(IBot::Player(position.x, position.y));
+			}
+		}
+	}
+
+	void WorldInterface::QueryBombs()
+	{
+		m_pBot->bombs.erase(m_pBot->bombs.begin(), m_pBot->bombs.end());
+		m_pBot->bombs_within_range.erase(m_pBot->bombs_within_range.begin(), m_pBot->bombs_within_range.end());
+
+		unsigned int bot_x = m_pBot->x;
+		unsigned int bot_y = m_pBot->y;
+		unsigned int range = m_pWorld->m_pRules->BombRange();
+		unsigned int bot_id = m_pBotEntity->Id();
+
+		for (auto& key : m_pWorld->m_BombKeys)
+		{
+			if (m_pWorld->m_Entities[key]->Id() != bot_id)
+			{
+				syb::Vec2 position = m_pWorld->m_Entities[key]->Position();
+
+				if (position.x == bot_x)
+				{
+					if ((bot_y - range <= position.y) && (bot_y + range >= position.y))
+						m_pBot->bombs_within_range.push_back(IBot::Bomb(position.x, position.y));
+				}
+				else if (position.y == bot_y)
+				{
+					if ((bot_x - range <= position.x) && (bot_x + range >= position.x))
+						m_pBot->bombs_within_range.push_back(IBot::Bomb(position.x, position.y));
+				}
+
+				m_pBot->bombs.push_back(IBot::Bomb(position.x, position.y));
+			}
+		}
+	}
+
+	void WorldInterface::UpdateBot(const bool& update_map)
+	{
+		if (!m_pBotEntity)
+		{
+			unsigned int bot_id = m_pBot->my_id;
+			for (auto& entity : m_pWorld->m_PlayerKeys)
+			{
+				std::shared_ptr<Player> player = std::dynamic_pointer_cast<Player>(m_pWorld->m_Entities[entity]);
+				if (player->PlayerId() == bot_id)
+				{
+					m_pBotEntity = player;
+					break;
 				}
 			}
 		}
+
+		m_pBot->x = (unsigned int)m_pBotEntity->Position().x;
+		m_pBot->y = (unsigned int)m_pBotEntity->Position().y;
+
+		if (update_map)
+			QueryMap();
+
+		QueryBombs();
+		QueryPlayers();
 	}
 
 	// --------------------------------------------------------------------
@@ -176,40 +227,12 @@ namespace boom
 		m_BombPlantTimeout = syb::Time::GetTime();
 	}
 
-	void WorldInterface::UpdateBot(const bool& update_map)
-	{
-		if (!m_pBotEntity)
-			for (auto& entity : m_pWorld->m_Entities)
-			{
-				if (entity.second->Type() == IEntity::EntityType::PLAYER)
-				{
-					std::shared_ptr<Player> player = std::dynamic_pointer_cast<Player>(entity.second);
-					if (player->PlayerId() == m_pBot->my_id)
-					{
-						m_pBotEntity = player;
-						break;
-					}
-				}
-			}
-
-		// This is called only after receiving the id and the first game_state from the server
-		// i.e. everything is where it should be
-		//m_pBot->x = (unsigned int)m_pWorld->m_Entities[m_pBot->my_id]->Position().x;
-		//m_pBot->y = (unsigned int)m_pWorld->m_Entities[m_pBot->my_id]->Position().y;
-		m_pBot->x = (unsigned int)m_pBotEntity->Position().x;
-		m_pBot->y = (unsigned int)m_pBotEntity->Position().y;
-
-		if (update_map)
-			QueryMap();
-
-		QueryPlayers();
-	}
-
+	// --------------------------------------------------------------------
 	WorldInterface::Target::Target() :
-		x(0),
-		y(0)
+		x(0), y(0)
 	{ }
 
+	// --------------------------------------------------------------------
 	std::string WorldInterface::GetDelimiters(const std::string& msg)
 	{
 		return "{" + msg + "}\n";

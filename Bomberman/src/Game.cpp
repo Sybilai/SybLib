@@ -232,7 +232,7 @@ namespace boom
 			else if (event_type == "destroy_entity")
 			{
 				if (m_World.HasEntity(Factory::buffer.object_id))
-					m_World.DestroyEntity(Factory::buffer.object_id);
+					m_World.DestroyEntity(Factory::buffer);
 			}
 			else if (event_type == "new_entity")
 			{

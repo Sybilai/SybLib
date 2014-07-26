@@ -22,6 +22,11 @@ public:
 			WorldInterface::PlantBomb();
 		else if (players.size())
 			WorldInterface::GoTo(xx, yy);
+
+		if (bombs.size())
+		{
+			xx = 1;
+		}
 	}
 
 private:
@@ -30,7 +35,7 @@ private:
 
 int main()
 {
-	BombermanGame game("sybilai.com:8124", "ctCopXp-Pt4z8HY2COZ11A");
+	BombermanGame game("sybilai.com:8124", "aT4gpwT2xN0JHpkfogUQew");
 	game.ConsoleLog(true, true);
 
 	IBot* myVeryOwnBot = new MyBot("hug4");

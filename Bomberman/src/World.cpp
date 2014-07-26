@@ -1,4 +1,5 @@
 #include "../include/World.hpp"
+#include <algorithm>
 #include <utility>
 
 
@@ -53,6 +54,7 @@ namespace boom
 			world.m_Entities.insert(std::pair<unsigned int, std::shared_ptr<IEntity>>(buf.object_id, player));
 			world.m_Map[pos_x][pos_y].entities.push_back(buf.object_id); 
 			world.ExpendKey(buf.object_id);
+			world.m_PlayerKeys.push_back(buf.object_id);
 		}
 		else if (buf.type == "bomb")
 		{
@@ -63,6 +65,7 @@ namespace boom
 			world.m_Entities.insert(std::pair<unsigned int, std::shared_ptr<IEntity>>(buf.object_id, bomb));
 			world.m_Map[pos_x][pos_y].entities.push_back(buf.object_id);
 			world.ExpendKey(buf.object_id);
+			world.m_BombKeys.push_back(buf.object_id);
 		}
 		else if (buf.type == "flame")
 		{
@@ -73,6 +76,7 @@ namespace boom
 			world.m_Entities.insert(std::pair<unsigned int, std::shared_ptr<IEntity>>(buf.object_id, flame));
 			world.m_Map[pos_x][pos_y].entities.push_back(buf.object_id);
 			world.ExpendKey(buf.object_id);
+			world.m_FlameKeys.push_back(buf.object_id);
 		}
 		else if (buf.type == "fixblock")
 		{
@@ -124,10 +128,27 @@ namespace boom
 	}
 
 	// --------------------------------------------------------------------
-	void World::DestroyEntity(const unsigned int& id)
+	void World::DestroyEntity(const Factory::PropertyBuffer& buffer)
 	{
-		m_Entities.erase(id);
-		//m_Entities[id]->~IEntity();
-		m_ActiveKeys[id] = false;
+		m_Entities.erase(buffer.object_id);
+		
+		std::vector<unsigned int>::iterator found_key;
+		if (buffer.type == "player")
+		{
+			found_key = std::find(m_PlayerKeys.begin(), m_PlayerKeys.end(), buffer.object_id);
+			m_PlayerKeys.erase(found_key);
+		}
+		else if (buffer.type == "bomb")
+		{
+			found_key = std::find(m_BombKeys.begin(), m_BombKeys.end(), buffer.object_id);
+			m_BombKeys.erase(found_key);
+		}
+		else if (buffer.type == "flame")
+		{
+			found_key = std::find(m_FlameKeys.begin(), m_FlameKeys.end(), buffer.object_id);
+			m_FlameKeys.erase(found_key);
+		}
+
+		m_ActiveKeys[buffer.object_id] = false;
 	}
 } // namespace boom
