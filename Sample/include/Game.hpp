@@ -13,7 +13,9 @@ namespace boom
 		friend class WorldInterface;
 		class IOManager;
 	public:
-		BombermanGame();
+		BombermanGame(const std::string& token);
+		BombermanGame(const std::string& connection_target, const std::string& token);
+		BombermanGame(const std::string& address, const std::string& port, const std::string& token);
 		~BombermanGame();
 		
 		World m_World;

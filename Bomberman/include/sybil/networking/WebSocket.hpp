@@ -17,7 +17,7 @@ namespace syb
 		WebSocket();
 		~WebSocket();
 
-		void Connect(const std::string& target, const std::string& connection_flag);
+		void Connect(const std::string& target, const std::string& connection_flag, const std::string& token);
 		void Send(const std::string& msg);
 		std::queue<std::string> GetMsgQueue();
 

@@ -6,6 +6,7 @@
 #include "EngineRules.hpp"
 #include "World.hpp"
 #include <vector>
+#include <string>
 
 
 namespace syb
@@ -30,14 +31,18 @@ namespace syb
 	
 	protected:
 		// Only thine offspring shall either touch or see thine private parts.
-		Game();
+		Game(std::string token);
+		Game(std::string connection_target, std::string token);
+		Game(std::string address, std::string port, std::string token);
 
 		/// Initialises engine "critical" systems. In case Init() is overriden, this should be called in it before anything else. 
 		void EngineInit();
 
 		//void RegisterWorld(World*);
 
-		/// Initialises game-specific systems. 
+		/// Register any game-specific systems. I.e. Init() should always be overridden if there is to be any functionality above 
+		/// the engine's dealings. It is not a pure virtual since the engine should still work and provide basic functionality
+		/// even if there is no specific game above it.
 		virtual void Init();
 
 		/// Gets called by the main game loop on each frame.
@@ -88,6 +93,8 @@ namespace syb
 
 	private:
 		bool m_bEngineInitialised;
+		std::string m_ConnectionToken;
+		std::string m_ConnectionAddress;
 	};
 } // namespace syb
 

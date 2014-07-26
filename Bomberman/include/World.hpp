@@ -41,7 +41,7 @@ namespace boom
 		static PropertyBuffer buffer;
 
 	public:
-		/// Create an entity using buffer and send it to World
+		/// Create an entity using the static buffer and send it to World
 		static void CreateEntity(World&);
 
 		/// Create an entity using the passed arg and send it to World
@@ -54,6 +54,7 @@ namespace boom
 	public:
 		struct Tile
 		{
+			/// Tiles hold only keys to entities, not the entities themselved, or pointers to said entities. 
 			//std::vector<std::unique_ptr<IEntity>> entities;
 			std::vector<unsigned int> entities;
 		};
@@ -70,8 +71,12 @@ namespace boom
 		void MoveEntity(const unsigned int& id, const syb::Vec2& new_pos);
 		void DestroyEntity(const unsigned int& id);
 
+		// Avoid any(or too many) accessors for stability and performance purposes when it comes to world representation: 
+		// adding indirection upon indirection to often accessed data like these would prove unfruitful.
 		std::shared_ptr<GameRules> m_pRules;
 		std::vector<std::vector<Tile>> m_Map;
+		
+		// The interface may request pointers to existent entities. This avoids some unnecessary querying 
 		//std::map<unsigned int, std::unique_ptr<IEntity>> m_Entities;
 		std::map<unsigned int, std::shared_ptr<IEntity>> m_Entities;
 

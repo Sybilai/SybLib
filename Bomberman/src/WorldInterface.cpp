@@ -78,7 +78,7 @@ namespace boom
 	{
 		auto time = syb::Time::GetTime();
 
-		if (syb::Time::FromSecTo(syb::Time::Elapsed(m_BombPlantTimeout, time), syb::Time::MILISEC) > 50)
+		if (syb::Time::FromSecTo(syb::Time::Elapsed(m_BombPlantTimeout, time), syb::Time::MILISEC) > 500)
 		{
 			m_pIOManager->SendMsg(GetDelimiters(R"("event":"bomb")"));
 			m_BombPlantTimeout = time;

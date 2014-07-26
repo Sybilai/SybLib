@@ -40,7 +40,7 @@ namespace syb
 	}
 
 	// --------------------------------------------------------------------
-	void WebSocket::Connect(const std::string& target, const std::string& connection_flag)
+	void WebSocket::Connect(const std::string& target, const std::string& connection_flag, const std::string& token)
 	{
 		WSADATA wsaData;
 		WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -48,7 +48,7 @@ namespace syb
 		std::string formatted_addr = "ws://" + target;
 		m_pSocket = easywsclient::WebSocket::from_url(formatted_addr);
 
-		std::string connection_msg("{\"token\":\"ctCopXp-Pt4z8HY2COZ11A\", \"name\":\"" + connection_flag + "\"}\n");
+		std::string connection_msg("{\"token\":\"" + token + "\", \"name\":\"" + connection_flag + "\"}\n");
 		Send(connection_msg);
 
 		m_threadSend = std::thread(&WebSocket::SendThread, this);
@@ -93,8 +93,8 @@ namespace syb
 
 				try
 				{
-					//if (!m_pSocket)
-					//	throw err_unreachable;
+					if (!m_pSocket)
+						throw err_unreachable;
 
 					switch (m_pSocket->getReadyState())
 					{
@@ -149,8 +149,8 @@ namespace syb
 		{
 			try
 			{
-				//if (!m_pSocket)
-				//	throw err_unreachable;
+				if (!m_pSocket)
+					throw err_unreachable;
 
 				switch (m_pSocket->getReadyState())
 				{

@@ -10,9 +10,18 @@ using namespace rapidjson;
 namespace boom
 {
 	// --------------------------------------------------------------------
-	BombermanGame::BombermanGame()
+	BombermanGame::BombermanGame(const std::string& token) :
+		Game(token)
 	{ }
 
+	BombermanGame::BombermanGame(const std::string& connection_target, const std::string& token) :
+		Game(connection_target, token)
+	{ }
+
+	BombermanGame::BombermanGame(const std::string& address, const std::string& port, const std::string& token) :
+		Game(address, port, token)
+	{ }
+	
 	// --------------------------------------------------------------------
 	BombermanGame::~BombermanGame()
 	{ }

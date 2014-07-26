@@ -15,7 +15,7 @@ namespace syb
 	{
 	public:
 		virtual ~IODevice() { }
-		virtual void Connect(const std::string& target, const std::string& connection_flag) = 0;
+		virtual void Connect(const std::string& target, const std::string& connection_flag, const std::string& token) = 0;
 		virtual void Send(const std::string& msg) = 0;
 		virtual std::queue<std::string> GetMsgQueue() = 0;
 

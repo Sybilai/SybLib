@@ -14,7 +14,7 @@ namespace syb
 	}
 
 	// --------------------------------------------------------------------
-	void WinNamedPipe::Connect(const std::string& target, const std::string& connection_flag)
+	void WinNamedPipe::Connect(const std::string& target, const std::string& connection_flag, const std::string& token)
 	{
 		// Connect to an existing pipe created by SybLab
 		m_hPipe = CreateFile(

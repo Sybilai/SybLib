@@ -24,7 +24,7 @@ namespace syb
 	}
 
 	// --------------------------------------------------------------------
-	void IOManager::Init(const std::string &connection_flag, const ConnectionTarget &target, std::string *params)
+	void IOManager::Init(const std::string &connection_flag, const ConnectionTarget &target, std::string *params, const std::string& token)
 	{
 		switch (target)
 		{
@@ -32,17 +32,17 @@ namespace syb
 			m_pDevice = std::make_unique<WinNamedPipe>();
 			m_State = STATE_CONNECTING;
 			if (params)
-				m_pDevice->Connect(*params, connection_flag);
+				m_pDevice->Connect(*params, connection_flag, token);
 			else
-				m_pDevice->Connect(DEFAULT_LAB_PARAMS, connection_flag);
+				m_pDevice->Connect(DEFAULT_LAB_PARAMS, connection_flag, token);
 			break;
 		case SYB_VIS:
 			m_pDevice = std::make_unique<TcpSocket>();
 			m_State = STATE_CONNECTING;
 			if (params)
-				m_pDevice->Connect(*params, connection_flag);
+				m_pDevice->Connect(*params, connection_flag, token);
 			else
-				m_pDevice->Connect(DEFAULT_VIS_PARAMS, connection_flag);
+				m_pDevice->Connect(DEFAULT_VIS_PARAMS, connection_flag, token);
 
 			m_State = STATE_CONNECTED;
 			break;

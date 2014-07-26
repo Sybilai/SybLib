@@ -22,7 +22,7 @@ namespace syb
 	}
 
 	// --------------------------------------------------------------------
-	void WinTcpSocket::Connect(const std::string& target, const std::string& connection_flag)
+	void WinTcpSocket::Connect(const std::string& target, const std::string& connection_flag, const std::string& token)
 	{
 		WSADATA wsaData;
 		WSAStartup(MAKEWORD(2, 2), &wsaData);

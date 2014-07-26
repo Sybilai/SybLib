@@ -74,7 +74,12 @@ namespace syb
 		IOManager();
 		~IOManager();
 
-		void Init(const std::string &connection_flag, const ConnectionTarget &target = DEFAULT_TARGET, std::string *params = nullptr);
+		void Init(
+			const std::string &connection_flag, 
+			const ConnectionTarget &target = DEFAULT_TARGET, 
+			std::string *params = nullptr, 
+			const std::string& token = "ctCopXp-Pt4z8HY2COZ11A");
+
 		void Shutdown();
 
 		void SendMsg(const std::string &msg);

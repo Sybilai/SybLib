@@ -115,11 +115,14 @@ namespace syb
 		// Speed's my game
 		std::future<void> time = std::async(Time::Init);
 		//std::future<EventManager*> event_manager = std::async(g_pEventManager->Init());
-		//g_pEventManager->Init();
-		m_IOManager.Init(m_pBots[0]->Name());
+		if (m_ConnectionAddress.size())
+			m_IOManager.Init(m_pBots[0]->Name(), IOManager::ConnectionTarget::SYB_VIS, &m_ConnectionAddress, m_ConnectionToken);
+		else
+			m_IOManager.Init(m_pBots[0]->Name(), IOManager::DEFAULT_TARGET, nullptr, m_ConnectionToken);
 
 		// Wait for everything to settle
 		time.wait();
+		//event_manager.wait();
 
 		// Time to party hard
 		// Not really actually. Figure out how to pull the first message from the authority in here
@@ -130,20 +133,36 @@ namespace syb
 	void Game::Init()
 	{
 		EngineInit();
-		// REGISTER ANY REQUIRED SYSTEMS LIKE WORLD, OTHERWISE BEAR THE FURY OF THE SNAFU
 	}
 
 	// --------------------------------------------------------------------
-	Game::Game() :
+	Game::Game(std::string address, std::string port, std::string token) :
 		m_bEngineInitialised(false),
 		m_Frame(0),
 		m_FrameTime(1000000 / 30),
-		m_DebugTimeThreshold(1000000) // implies less than 1 FPS
+		m_DebugTimeThreshold(1000000), // implies less than 1 FPS
+		m_ConnectionAddress(address + ":" + port),
+		m_ConnectionToken(token)
 		//m_pWorld(nullptr)
 		//g_pEventManager(nullptr)
-	{
+	{ }
 
-	}
+	Game::Game(std::string connection_target, std::string token) :
+		m_bEngineInitialised(false),
+		m_Frame(0),
+		m_FrameTime(1000000 / 30),
+		m_DebugTimeThreshold(1000000),
+		m_ConnectionAddress(connection_target),
+		m_ConnectionToken(token)
+	{ }
+
+	Game::Game(std::string token) :
+		m_bEngineInitialised(false),
+		m_Frame(0),
+		m_FrameTime(1000000 / 30),
+		m_DebugTimeThreshold(1000000),
+		m_ConnectionToken(token)
+	{ }
 
 	Game::RuleBuffer::RuleBuffer() :
 		ready_for_lunch(false),
@@ -155,6 +174,7 @@ namespace syb
 		is_over(false)
 	{ }
 
+	// --------------------------------------------------------------------
 	void Game::ConsoleLog(const bool& received, const bool& sent)
 	{
 		if (received)

@@ -30,7 +30,7 @@ private:
 
 int main()
 {
-	BombermanGame game;
+	BombermanGame game("sybilai.com:8124", "ctCopXp-Pt4z8HY2COZ11A");
 	game.ConsoleLog(true, true);
 
 	IBot* myVeryOwnBot = new MyBot("hug4");
