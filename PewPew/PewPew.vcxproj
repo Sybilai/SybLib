@@ -44,6 +44,7 @@
     <ProjectGuid>{2B701C0E-C3D5-4023-9320-477295B80B1D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>PewPew</RootNamespace>
+    <ProjectName>OldFramework</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

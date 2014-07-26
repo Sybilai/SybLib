@@ -23,6 +23,8 @@ public:
 		else if (players.size())
 			WorldInterface::GoTo(xx, yy);
 	}
+
+private:
 };
 
 
