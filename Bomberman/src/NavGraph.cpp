@@ -15,14 +15,16 @@ namespace boom
 	{
 		if (world.m_Map[x][y].entities.size())
 		{
-			unsigned int id = world.m_Map[x][y].entities[0];
-			if (world.m_Entities[id]->Type() != IEntity::EntityType::FIXBLOCK)
-				return true;
+			for (auto& entity_id : world.m_Map[x][y].entities)
+			{
+				IEntity::EntityType type = world.m_Entities[entity_id]->Type();
+				if (type == IEntity::EntityType::FIXBLOCK ||
+					type == IEntity::EntityType::FLAME)
+					return false;
+			}
 		}
-		else
-			return true;
 
-		return false;
+		return true;
 	}
 
 	syb::NodeId_t NavGraph::GetNodeId(const unsigned int& x, const unsigned int& y)

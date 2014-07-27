@@ -18,8 +18,21 @@ namespace boom
 		friend class BombermanGame;
 	public:
 		static void GoTo(const unsigned int& x, const unsigned int& y);
+
+		/// Stops the bot
+		static void Stop();
+		
+		static bool IsCurrentPathSafe();
+
 		/// If the bot is moving, it will stop and plant the bomb
 		static void PlantBomb();
+		
+		/// Returns the index that can be used in players[return_value_here]
+		/// If there are 2 with the same distance, returns the first one found
+		/// Returns -1 if there are no other players.
+		static int GetClosestPlayer();
+
+		static void GetToSafety();
 
 	private:
 		struct Target

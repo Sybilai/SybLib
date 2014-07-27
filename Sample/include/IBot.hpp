@@ -41,6 +41,14 @@ namespace boom
 			FLAME = 2
 		};
 
+		enum class Direction
+		{
+			UP = 0,
+			RIGHT = 1,
+			DOWN = 2,
+			LEFT = 3
+		};
+
 		struct Player
 		{
 			Player(const unsigned int& x_, const unsigned int& y_);
@@ -64,6 +72,8 @@ namespace boom
 		std::vector<Player> players;
 		std::vector<Bomb  > bombs_within_range;
 		std::vector<Player> players_within_range;
+
+		std::vector<Direction> current_path;
 
 	private:
 		unsigned int m_EntityId;

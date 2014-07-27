@@ -1,6 +1,7 @@
 #include "../include/sybil/networking/IOManager.hpp"
 #include "../include/sybil/ai/Pathfinding.hpp"
 #include "../include/WorldInterface.hpp"
+#include <cstdlib>
 #include <memory>
 #include <map>
 
@@ -27,6 +28,10 @@ namespace boom
 
 		if (IsMoveTargetValid(Target(x, y)))
 		{
+			// Not sure if should regenerate the whole graph. 
+			// Consider considering.
+			m_pWorld->GenerateNavGraph();
+
 			std::vector<syb::Connection> path = 
 				syb::Dijkstra::Search(&m_pWorld->m_NavGraph, NavGraph::GetNodeId(m_pBot->x, m_pBot->y), NavGraph::GetNodeId(x, y));
 
@@ -53,21 +58,33 @@ namespace boom
 				{
 					// On the same line(i.e. move sideways)
 					if (from_x > to_x)
+					{
 						//directions.push_back("left");
 						directions += R"("left",)";
+						m_pBot->current_path.push_back(IBot::Direction::LEFT);
+					}
 					else
+					{
 						//directions.push_back("right");
 						directions += R"("right",)";
+						m_pBot->current_path.push_back(IBot::Direction::RIGHT);
+					}
 				}
 				else
 				{
 					// On the same column(i.e. move... vertiways(?))
 					if (from_y > to_y)
+					{
 						//directions.push_back("up");
 						directions += R"("up",)";
+						m_pBot->current_path.push_back(IBot::Direction::UP);
+					}
 					else
+					{
 						//directions.push_back("down");
 						directions += R"("down",)";
+						m_pBot->current_path.push_back(IBot::Direction::DOWN);
+					}
 				}
 			}
 
@@ -77,7 +94,16 @@ namespace boom
 
 			m_CurrentTarget.x = x;
 			m_CurrentTarget.y = y;
+
+			IsCurrentPathSafe();
 		}
+	}
+
+	void WorldInterface::Stop()
+	{
+		std::string msg = R"("event":"move", "direction": [])";
+		m_pIOManager->SendMsg(GetDelimiters(msg));
+		m_pBot->current_path.erase(m_pBot->current_path.begin(), m_pBot->current_path.end());
 	}
 
 	void WorldInterface::PlantBomb()
@@ -95,10 +121,7 @@ namespace boom
 			if (syb::Time::FromSecTo(syb::Time::Elapsed(m_BombPlantTimeout, time), syb::Time::MILISEC) > 300)
 			{
 				if (!((m_CurrentTarget.x == m_pBot->x) && (m_CurrentTarget.y == m_pBot->y)))
-				{
-					std::string msg = R"("event":"move", "direction": [])";
-					m_pIOManager->SendMsg(GetDelimiters(msg));
-				}
+					Stop();
 
 				m_pIOManager->SendMsg(GetDelimiters(R"("event":"bomb")"));
 				m_BombPlantTimeout = time;
@@ -157,6 +180,8 @@ namespace boom
 				{
 					if (m_pWorld->m_Entities[m_pWorld->m_Map[x][y].entities[0]]->Type() == IEntity::EntityType::FIXBLOCK)
 						m_pBot->world[x][y] = IBot::FIXLBOCK;
+					else if (m_pWorld->m_Entities[m_pWorld->m_Map[x][y].entities[0]]->Type() == IEntity::EntityType::FLAME)
+						m_pBot->world[x][y] = IBot::FLAME;
 					else
 						m_pBot->world[x][y] = IBot::WALKABLE;
 				}
@@ -199,15 +224,59 @@ namespace boom
 		}
 	}
 
+	void WorldInterface::GetToSafety()
+	{
+	}
+
+	bool WorldInterface::IsCurrentPathSafe()
+	{
+		// If the current_path starts like this:
+		// A->B->C->D
+		// When the bot is at B, the path will be the same:
+		// A->B->C->D
+		// When the target D is reached or the bot stops, the path is emptied:
+		// NOTHING	
+		unsigned int current_x = m_CurrentTarget.x,
+					 current_y = m_CurrentTarget.y;
+		
+		if (m_pBot->world[current_x][current_y] == IBot::FLAME)
+			return false;
+
+		//for (auto it = m_pBot->current_path.end() - 1, end = m_pBot->current_path.begin(); it >= end; --it)
+		for (int i = m_pBot->current_path.size() - 1; i >= 1; --i)
+		{
+			switch (m_pBot->current_path[i])
+			{
+			case IBot::Direction::UP:
+				current_y--;
+				break;
+			case IBot::Direction::RIGHT:
+				current_x++;
+				break;
+			case IBot::Direction::DOWN:
+				current_y++;
+				break;
+			case IBot::Direction::LEFT:
+				current_x--;
+				break;
+			}
+
+			if (m_pBot->world[current_x][current_y] == IBot::FLAME)
+				return false;
+		}
+
+		return true;
+	}
+
 	void WorldInterface::QueryBombs()
 	{
 		m_pBot->bombs.erase(m_pBot->bombs.begin(), m_pBot->bombs.end());
 		m_pBot->bombs_within_range.erase(m_pBot->bombs_within_range.begin(), m_pBot->bombs_within_range.end());
 
-		unsigned int bot_x = m_pBot->x;
-		unsigned int bot_y = m_pBot->y;
-		unsigned int range = m_pWorld->m_pRules->BombRange();
-		unsigned int bot_id = m_pBotEntity->Id();
+		unsigned int bot_x = m_pBot->x,
+					 bot_y = m_pBot->y,
+					 range = m_pWorld->m_pRules->BombRange(),
+					 bot_id = m_pBotEntity->Id();
 
 		for (auto& key : m_pWorld->m_BombKeys)
 		{
@@ -256,11 +325,40 @@ namespace boom
 		m_pBot->x = (unsigned int)m_pBotEntity->Position().x;
 		m_pBot->y = (unsigned int)m_pBotEntity->Position().y;
 
+		if (m_pBot->x == m_CurrentTarget.x && m_pBot->y == m_CurrentTarget.y)
+			m_pBot->current_path.erase(m_pBot->current_path.begin(), m_pBot->current_path.end());
+
 		if (update_map)
 			QueryMap();
 
 		QueryBombs();
 		QueryPlayers();
+	}
+
+	int WorldInterface::GetClosestPlayer()
+	{
+		if (!m_pBot->players.size())
+			return -1;
+
+		// Avoid repeated dereferencing, and also copying 
+		unsigned int bot_x = m_pBot->x;
+		unsigned int bot_y = m_pBot->y;
+		std::vector<IBot::Player>& players = m_pBot->players;
+
+		// Manhattan distance: it's over ...
+		unsigned int min_distance = 90001, distance = 0, min_player = 0;
+
+		for (size_t it = 0; it < players.size(); ++it)
+		{
+			distance = abs((int)(players[it].x - bot_x)) + abs((int)(players[it].y - bot_y));
+			if (distance < min_distance)
+			{
+				distance = min_distance;
+				min_player = it;
+			}
+		}
+
+		return min_player;
 	}
 
 	// --------------------------------------------------------------------
