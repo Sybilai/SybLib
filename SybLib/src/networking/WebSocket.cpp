@@ -13,12 +13,12 @@ namespace syb
 
 	class ExUnreachable : public std::exception
 	{
-		const char* what() const throw() { return "Server is unreachable"; }
+		const char* what() const throw() { return "Server is unreachable."; }
 	} err_unreachable;
 
 	class ExGameOver : public std::exception
 	{
-		const char* what() const throw() { return "Game is over"; }
+		const char* what() const throw() { return "Game is over."; }
 	} err_game_over;
 
 	// --------------------------------------------------------------------

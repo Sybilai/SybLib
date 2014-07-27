@@ -18,9 +18,18 @@ namespace boom
 		friend class BombermanGame;
 	public:
 		static void GoTo(const unsigned int& x, const unsigned int& y);
+		/// If the bot is moving, it will stop and plant the bomb
 		static void PlantBomb();
 
 	private:
+		struct Target
+		{
+			Target();
+			Target(const unsigned int& x_, const unsigned int& y_);
+			unsigned int x;
+			unsigned int y;
+		};
+
 		WorldInterface();
 		static void Init(BombermanGame&);
 		static void UpdateBot(const bool& update_map = false);
@@ -29,18 +38,16 @@ namespace boom
 		static void QueryBombs();
 		static void QueryPlayers();
 
+		static bool IsBombValid(const Target&);
+		static bool IsMoveTargetValid(const Target&);
+
 		static std::string GetDelimiters(const std::string& msg);
 		
 		static IBot* m_pBot;
 		static std::shared_ptr<Player> m_pBotEntity;
 		static World* m_pWorld;
 
-		struct Target
-		{
-			Target();
-			unsigned int x;
-			unsigned int y;
-		} static m_CurrentTarget;
+		static Target m_CurrentTarget;
 
 		static syb::Time::Clock m_BombPlantTimeout;
 	};

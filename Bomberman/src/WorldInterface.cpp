@@ -19,7 +19,13 @@ namespace boom
 	// --------------------------------------------------------------------
 	void WorldInterface::GoTo(const unsigned int& x, const unsigned int& y)
 	{
-		if (x != m_CurrentTarget.x && y != m_CurrentTarget.y)
+		while (!m_pBot)
+		{
+			// VM thread started before the game finished initialising.
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		}
+
+		if (IsMoveTargetValid(Target(x, y)))
 		{
 			std::vector<syb::Connection> path = 
 				syb::Dijkstra::Search(&m_pWorld->m_NavGraph, NavGraph::GetNodeId(m_pBot->x, m_pBot->y), NavGraph::GetNodeId(x, y));
@@ -76,13 +82,55 @@ namespace boom
 
 	void WorldInterface::PlantBomb()
 	{
+		while (!m_pBot)
+		{
+			// VM thread started before the game finished initialising.
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		}
+
 		auto time = syb::Time::GetTime();
 
-		if (syb::Time::FromSecTo(syb::Time::Elapsed(m_BombPlantTimeout, time), syb::Time::MILISEC) > 300)
+		if (IsBombValid(Target(m_pBot->x, m_pBot->y)))
 		{
-			m_pIOManager->SendMsg(GetDelimiters(R"("event":"bomb")"));
-			m_BombPlantTimeout = time;
+			if (syb::Time::FromSecTo(syb::Time::Elapsed(m_BombPlantTimeout, time), syb::Time::MILISEC) > 300)
+			{
+				if (!((m_CurrentTarget.x == m_pBot->x) && (m_CurrentTarget.y == m_pBot->y)))
+				{
+					std::string msg = R"("event":"move", "direction": [])";
+					m_pIOManager->SendMsg(GetDelimiters(msg));
+				}
+
+				m_pIOManager->SendMsg(GetDelimiters(R"("event":"bomb")"));
+				m_BombPlantTimeout = time;
+			}
 		}
+	}
+
+	bool WorldInterface::IsBombValid(const Target& target)
+	{
+		for (auto& bomb : m_pBot->bombs)
+		{
+			if ((bomb.x == target.x) && (bomb.y == target.y))
+				return false;
+		}
+		return true;
+	}
+
+	bool WorldInterface::IsMoveTargetValid(const Target& target)
+	{
+		// Trying to move on a walled tile
+		if (m_pBot->world[target.x][target.y] == IBot::FIXLBOCK)
+			return false;
+
+		// Already moving there
+		if ((target.x == m_CurrentTarget.x) && (target.y == m_CurrentTarget.y))
+			return false;
+
+		// Already there
+		if ((m_pBot->x == target.x) && (m_pBot->y == target.y))
+			return false;
+
+		return true;
 	}
 
 	// --------------------------------------------------------------------
@@ -185,6 +233,12 @@ namespace boom
 
 	void WorldInterface::UpdateBot(const bool& update_map)
 	{
+		while (!m_pBot)
+		{
+			// VM thread started before the game finished initialising.
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		}
+
 		if (!m_pBotEntity)
 		{
 			unsigned int bot_id = m_pBot->my_id;
@@ -230,6 +284,11 @@ namespace boom
 	// --------------------------------------------------------------------
 	WorldInterface::Target::Target() :
 		x(0), y(0)
+	{ }
+
+	// --------------------------------------------------------------------
+	WorldInterface::Target::Target(const unsigned int& x_, const unsigned int& y_) :
+		x(x_), y(y_)
 	{ }
 
 	// --------------------------------------------------------------------

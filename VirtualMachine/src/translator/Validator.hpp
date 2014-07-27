@@ -1,0 +1,1 @@
+// Validates given data and makes sure it's valid.

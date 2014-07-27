@@ -22,11 +22,13 @@ public:
 			WorldInterface::PlantBomb();
 		else if (players.size())
 			WorldInterface::GoTo(xx, yy);
-
-		if (bombs.size())
+		/*static bool tit = true;
+		if (tit)
 		{
-			xx = 1;
-		}
+			WorldInterface::PlantBomb();
+			WorldInterface::GoTo(3, 3);
+			tit = false;
+		}*/
 	}
 
 private:
