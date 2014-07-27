@@ -1,50 +1,30 @@
-// Assumes that bomberman.lib and bomberman-d.lib are located in (this project's directory)/lib/
-// MUST BE DEFINED BEFORE ANYTHING ELSE if it is to be used
-#define IMPORT_LIBS_FOR_ME
-#include "include/Bomberman.hpp"
-
-
-class MyBot : public IBot
-{
-public:
-	MyBot(std::string name) : IBot(name) { }
-	void Update()
-	{
-		static unsigned int xx = 1, yy = 1;
-		if (players.size())
-		{
-			xx = players[0].x;
-			yy = players[0].y;
-			//std::cout << xx << ":" << yy;
-		}
-
-		if (players_within_range.size())
-			WorldInterface::PlantBomb();
-		else if (players.size())
-			WorldInterface::GoTo(xx, yy);
-		/*static bool tit = true;
-		if (tit)
-		{
-			WorldInterface::PlantBomb();
-			WorldInterface::GoTo(3, 3);
-			tit = false;
-		}*/
-	}
-
-private:
-};
+// #define IMPORT_LIBS_FOR_ME
+#include "Bomberman.hpp"
+#include "Bot.h"
 
 
 int main()
 {
+	// Option 1: custom address and port
+	// @param1: address:port
+	// @param2: token
+	// ----------------------
+	// Option 2: default address and port
+	// @param1: token
+	// ----------------------
+	// Option 3: custom address and port
+	// @param1: address
+	// @param2: port
+	// @param3: token
 	BombermanGame game("sybilai.com:8124", "aT4gpwT2xN0JHpkfogUQew");
+	
+	// @param1: log received messages from authority
+	// @param2: log sent messages to authority
 	game.ConsoleLog(true, true);
 
-	IBot* myVeryOwnBot = new MyBot("hug4");
-	game.RegisterBot(myVeryOwnBot);
+	IBot* bot = new Bot("your name here");
+	game.RegisterBot(bot);
 
-	// Register some other bots to run alongside "Bada$$". Theoretically, that is the case.
-	// Currently, any bot registered after the first will invalidate the first and replace it. 
-
+	// Start the game loop
 	game.Run();
 }
