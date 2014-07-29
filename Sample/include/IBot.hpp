@@ -1,6 +1,7 @@
 #ifndef BOOM_BOT_HPP
 #define BOOM_BOT_HPP
 
+#include "sybil/ai/StateMachine.hpp"
 #include "sybil/ai/IBot.hpp"
 #include <string>
 #include <vector>

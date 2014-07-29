@@ -22,7 +22,7 @@ int main()
 	// @param2: log sent messages to authority
 	game.ConsoleLog(true, true);
 
-	IBot* bot = new Bot("moving");
+	IBot* bot = new Bot("myBot");
 	game.RegisterBot(bot);
 
 	// Start the game loop

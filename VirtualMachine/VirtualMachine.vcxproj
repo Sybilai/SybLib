@@ -10,6 +10,22 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\CucuLang\Instructions.hpp" />
+    <ClInclude Include="src\CucuLang\StackMachine.hpp" />
+    <ClInclude Include="src\CucuLang\VirtualMachine.hpp" />
+    <ClInclude Include="src\Dummy.hpp" />
+    <ClInclude Include="src\translator\Translator.hpp" />
+    <ClInclude Include="src\translator\Validator.hpp" />
+    <ClInclude Include="src\UserInterface.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\CucuLang\StackMachine.cpp" />
+    <ClCompile Include="src\CucuLang\VirtualMachine.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\translator\Translator.cpp" />
+    <ClCompile Include="src\UserInterface.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{343BB3E9-380B-44C4-BB6C-0F4B8FCCAE6F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

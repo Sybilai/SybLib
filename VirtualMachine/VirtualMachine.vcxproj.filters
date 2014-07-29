@@ -1,2 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="src\Dummy.hpp" />
+    <ClInclude Include="src\UserInterface.hpp" />
+    <ClInclude Include="src\CucuLang\Instructions.hpp">
+      <Filter>lang</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CucuLang\StackMachine.hpp">
+      <Filter>lang</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CucuLang\VirtualMachine.hpp">
+      <Filter>lang</Filter>
+    </ClInclude>
+    <ClInclude Include="src\translator\Translator.hpp">
+      <Filter>translator</Filter>
+    </ClInclude>
+    <ClInclude Include="src\translator\Validator.hpp">
+      <Filter>translator</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\UserInterface.cpp" />
+    <ClCompile Include="src\CucuLang\StackMachine.cpp">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CucuLang\VirtualMachine.cpp">
+      <Filter>lang</Filter>
+    </ClCompile>
+    <ClCompile Include="src\translator\Translator.cpp">
+      <Filter>translator</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="lang">
+      <UniqueIdentifier>{6b9c61a7-03cb-4ee7-93f9-7d1b16c7ccc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="translator">
+      <UniqueIdentifier>{a7103c7c-4ae8-46d8-96cd-1d3e501bdaa1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

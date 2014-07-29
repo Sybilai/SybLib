@@ -14,6 +14,7 @@
     <ClInclude Include="include\ai\Pathfinding.hpp" />
     <ClInclude Include="include\ai\IBot.hpp" />
     <ClInclude Include="include\ai\NavGraph.hpp" />
+    <ClInclude Include="include\ai\StateMachine.hpp" />
     <ClInclude Include="include\ai\WorldInterface.hpp" />
     <ClInclude Include="include\core\Game.hpp" />
     <ClInclude Include="include\core\EngineRules.hpp" />

@@ -31,8 +31,7 @@ enum Instruction
 	// -------------------------
 	CUC_LITERAL_NUMBER = 0x20, // < 2^7
 	CUC_BYTE = 0x21, // one-byte signed integer
-	//CUC_INT = 0x21,
-	
+	CUC_LONG_LONG = 0x22,
 
 	// -------------------------
 	// Arithmetic 0x3

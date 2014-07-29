@@ -138,7 +138,8 @@ namespace syb
 				}*/
 			}
 
-			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+			//std::this_thread::sleep_for(std::chrono::milliseconds(1));
+			std::this_thread::sleep_for(std::chrono::nanoseconds(1));
 		}
 	}
 
@@ -200,7 +201,8 @@ namespace syb
 				_getch();
 			}
 
-			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+			//std::this_thread::sleep_for(std::chrono::milliseconds(1));
+			std::this_thread::sleep_for(std::chrono::nanoseconds(1));
 		}
 	}
 }

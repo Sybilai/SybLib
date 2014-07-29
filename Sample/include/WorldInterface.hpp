@@ -23,6 +23,7 @@ namespace boom
 		static void Stop();
 		
 		static bool IsCurrentPathSafe();
+		static bool IsTileSafe(const unsigned int& x, const unsigned int& y);
 
 		/// If the bot is moving, it will stop and plant the bomb
 		static void PlantBomb();
@@ -53,16 +54,17 @@ namespace boom
 
 		static bool IsBombValid(const Target&);
 		static bool IsMoveTargetValid(const Target&);
+		static bool TileHasBomb(const Target&);
 
 		static std::string GetDelimiters(const std::string& msg);
 		
-		static IBot* m_pBot;
-		static World* m_pWorld;
-		static std::shared_ptr<Player> m_pBotEntity;
+		static IBot* s_pBot;
+		static World* s_pWorld;
+		static std::shared_ptr<Player> s_pBotEntity;
 
-		static Target m_CurrentTarget;
+		static Target s_CurrentTarget;
 
-		static syb::Time::Clock m_BombPlantTimeout;
+		static syb::Time::Clock s_BombPlantTimeout;
 	};
 }
 

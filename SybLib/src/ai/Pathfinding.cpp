@@ -11,15 +11,15 @@ namespace syb
 	{ }
 
 	// --------------------------------------------------------------------
-	AStar::Heuristic::Heuristic(const NodeId_t& goal) :
-		goal_node(goal)
-	{ }
+	//AStar::Heuristic::Heuristic(const NodeId_t& goal) :
+	//	goal_node(goal)
+	//{ }
 
 	// --------------------------------------------------------------------
-	float AStar::Heuristic::GetEstimate(const NodeId_t& from)
-	{
-		return 0.0f;
-	}
+	//float AStar::Heuristic::GetEstimate(const NodeId_t& from)
+	//{
+	//	return 0.0f;
+	//}
 
 	// --------------------------------------------------------------------
 	PathfindingList::PathfindingList()
@@ -87,46 +87,49 @@ namespace syb
 	}
 
 	// --------------------------------------------------------------------
-	void AStar::Search(NavGraph* pGraph, const NodeId_t& start, const NodeId_t& end, Heuristic& heuristic)
-	{
-		NodeRecord start_record;
-		start_record.node = start;
-		start_record.cost_so_far = 0;
-		start_record.estimated_total_cost = heuristic.GetEstimate(start);
+	// TODO: Use the Dijkstra, give this some estimates and heuristics and stuff and get super speed pathfinding
+	// --------------------------------------------------------------------
+	//void AStar::Search(NavGraph* pGraph, const NodeId_t& start, const NodeId_t& end, Heuristic& heuristic)
+	//{
+		
+		//NodeRecord start_record;
+		//start_record.node = start;
+		//start_record.cost_so_far = 0;
+		//start_record.estimated_total_cost = heuristic.GetEstimate(start);
 
-		PathfindingList open, closed;
-		open += start_record;
+		//PathfindingList open, closed;
+		//open += start_record;
 
-		while (open.Length())
-		{
-			NodeRecord current = open.SmallestElement();
+		//while (open.Length())
+		//{
+		//	NodeRecord current = open.SmallestElement();
 
-			if (current.node == end)
-				break;
-			else
-			{
-				auto connections = pGraph->GetConnections(current.node);
+		//	if (current.node == end)
+		//		break;
+		//	else
+		//	{
+		//		auto connections = pGraph->GetConnections(current.node);
 
-				for (auto connection : connections)
-				{
-					unsigned int end_node = connection.m_ToNode;
-					float end_node_cost = current.cost_so_far + connection.m_Cost;
+		//		for (auto connection : connections)
+		//		{
+		//			unsigned int end_node = connection.m_ToNode;
+		//			float end_node_cost = current.cost_so_far + connection.m_Cost;
 
-					if (closed.HasNode(end_node))
-					{
-						NodeRecord end_node_record = closed.Find(end_node);
+		//			if (closed.HasNode(end_node))
+		//			{
+		//				NodeRecord end_node_record = closed.Find(end_node);
 
-						if (end_node_record.cost_so_far <= end_node_cost)
-							continue;
+		//				if (end_node_record.cost_so_far <= end_node_cost)
+		//					continue;
 
-						closed -= end_node_record;
+		//				closed -= end_node_record;
 
-						//float end_node_heuristic = end_node_record.
-					}
-				}
-			}
-		}
-	}
+		//				//float end_node_heuristic = end_node_record.
+		//			}
+		//		}
+		//	}
+		//}
+	//}
 
 	// --------------------------------------------------------------------
 	std::vector<Connection> Dijkstra::Search(NavGraph* pGraph, const NodeId_t& start, const NodeId_t& goal)

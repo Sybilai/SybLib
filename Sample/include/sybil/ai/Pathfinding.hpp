@@ -29,7 +29,7 @@ namespace syb
 		std::vector<NodeRecord> m_Nodes;
 	};
 
-	class AStar
+	/*class AStar
 	{
 	public:
 		struct Heuristic
@@ -41,7 +41,7 @@ namespace syb
 		};
 
 		static void Search(NavGraph*, const NodeId_t& start, const NodeId_t& end, Heuristic&);
-	};
+	};*/
 
 	class Dijkstra
 	{
